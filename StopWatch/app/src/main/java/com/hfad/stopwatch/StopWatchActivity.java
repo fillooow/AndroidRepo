@@ -1,0 +1,75 @@
+package com.hfad.stopwatch;
+
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+public class StopWatchActivity extends AppCompatActivity {
+    private int seconds = 0; //количество секунд
+    private boolean running; //проверка работы таймера, false по умолчанию
+    private Boolean wasRunning;
+
+    @Override
+    //по умолчанию, если активность создаётся с нуля, то параметр типа Bundle содержит null
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_stop_watch);
+        //но если он не равен null, те, уже был создан, то вытаскиваем переменные
+        if (savedInstanceState != null) {
+            //bundle.get*("name"); bundle - имя объекта Bundle,* - тип значения
+            //name - имя получаемых данных
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
+        runTimer();
+    }
+
+    //сохраняем данные, вызывается перед уничтожением активности
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        //bundle.put*("name", value); всё то же самое, но добавляется value - значение
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
+    }
+
+    public void onClickStart(View view) {
+        running = true;
+    }
+
+    public void onClickStop(View view) {
+        running = false;
+    }
+
+    public void onClickReset(View view) {
+        running = false;
+        seconds = 0;
+    }
+
+    protected void onStop() {
+        super.onStop(); //super обязательно должен быть вызван, иначе генерируется исключение
+        running = false;
+    }
+
+    private void runTimer() {
+        final TextView timeView = (TextView) findViewById(R.id.time_view);
+        final Handler handler = new Handler(); //новый объект типа Handler
+        handler.post(new Runnable() { //post() обеспечивает мгновенное выполнение кода
+            @Override
+            public void run() {
+                int hours = seconds/3600;
+                int minutes = (seconds%3600)/60;
+                int secs = seconds%60;
+                String time = String.format("%d:%02d:%02d", hours, minutes, secs);
+
+                timeView.setText(time);
+                if(running) {
+                    seconds++;
+                }
+                handler.postDelayed(this, 1000); //postDelayed может принимать long параметр -
+                //задержку в миллисекундах
+            }
+        });
+
+    }
+}
