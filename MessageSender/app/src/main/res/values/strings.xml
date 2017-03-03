@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">MessageSender</string>
-    <string name="type">Type It</string>
-    <string name="back">Back</string>
-    <string name="send">Send Message</string>
-    <string name="chooser">Send message...</string>
-</resources>
