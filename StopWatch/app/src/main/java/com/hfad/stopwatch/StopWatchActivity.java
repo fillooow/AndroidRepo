@@ -9,7 +9,7 @@ import android.widget.TextView;
 public class StopWatchActivity extends AppCompatActivity {
     private int seconds = 0; //количество секунд
     private boolean running; //проверка работы таймера, false по умолчанию
-    private Boolean wasRunning;
+    private boolean wasRunning; //хранит информациию
 
     @Override
     //по умолчанию, если активность создаётся с нуля, то параметр типа Bundle содержит null
@@ -22,6 +22,7 @@ public class StopWatchActivity extends AppCompatActivity {
             //name - имя получаемых данных
             seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
         }
         runTimer();
     }
@@ -31,6 +32,7 @@ public class StopWatchActivity extends AppCompatActivity {
         //bundle.put*("name", value); всё то же самое, но добавляется value - значение
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
+        savedInstanceState.putBoolean("wasRunning", wasRunning);
     }
 
     public void onClickStart(View view) {
@@ -48,7 +50,16 @@ public class StopWatchActivity extends AppCompatActivity {
 
     protected void onStop() {
         super.onStop(); //super обязательно должен быть вызван, иначе генерируется исключение
+        wasRunning = running; //сохраняем информацию о работе секундомера на
+        //момент запуска метода onStop()
         running = false;
+    }
+
+    //если секундомер работал,его работа возобновится
+    protected void onStart() {
+        super.onStart();
+        if (wasRunning)
+            running = true;
     }
 
     private void runTimer() {
