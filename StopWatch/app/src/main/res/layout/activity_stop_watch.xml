@@ -50,4 +50,24 @@
         android:layout_alignStart="@+id/stop_button"
         android:layout_marginTop="10dp" />
 
+    <Button
+        android:id="@+id/loopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/reset_button"
+        android:layout_below="@+id/reset_button"
+        android:layout_marginTop="10dp"
+        android:onClick="onClickLoop"
+        android:text="@string/loop" />
+
+    <Button
+        android:id="@+id/showLoopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/loop"
+        android:layout_below="@+id/loop"
+        android:layout_marginTop="10dp"
+        android:onClick="onClickShowLoop"
+        android:text="@string/show_loops" />
+
 </RelativeLayout>

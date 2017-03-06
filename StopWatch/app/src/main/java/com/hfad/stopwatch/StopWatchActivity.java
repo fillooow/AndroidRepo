@@ -1,10 +1,13 @@
 package com.hfad.stopwatch;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class StopWatchActivity extends AppCompatActivity {
     private int seconds = 0; //количество секунд
@@ -46,6 +49,18 @@ public class StopWatchActivity extends AppCompatActivity {
     public void onClickReset(View view) {
         running = false;
         seconds = 0;
+    }
+
+    public void onClickLoop(View view) {
+        //вытаскиваем текстовое поле с цифрами
+        TextView loopView = (TextView) findViewById(R.id.time_view);
+        ArrayList<String> loopArrayList = new ArrayList<>();
+        //вытаскиваем текст
+        String loopText = loopView.getText().toString();
+        //создаём интент
+        Intent intent = new Intent(this, LoopActivity.class);
+        intent.putExtra("loopStrings", loopText);
+        startActivity(intent);
     }
 
     protected void onStop() {
