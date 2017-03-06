@@ -6,4 +6,5 @@
     <string name="loop">Loop</string>
     <string name="show_loops">Show Loops</string>
     <string name="message">Your loops</string>
+    <string name="back">Back</string>
 </resources>

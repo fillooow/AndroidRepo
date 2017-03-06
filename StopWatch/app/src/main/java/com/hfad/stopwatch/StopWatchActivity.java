@@ -13,6 +13,7 @@ public class StopWatchActivity extends AppCompatActivity {
     private int seconds = 0; //количество секунд
     private boolean running; //проверка работы таймера, false по умолчанию
     private boolean wasRunning; //хранит информациию
+    private ArrayList<String> loopArrayList = new ArrayList<>(); //сюда передаём круги
 
     @Override
     //по умолчанию, если активность создаётся с нуля, то параметр типа Bundle содержит null
@@ -51,16 +52,20 @@ public class StopWatchActivity extends AppCompatActivity {
         seconds = 0;
     }
 
+    public void onClickShowLoop(View view) {
+        ArrayList<String> loopMes = loopArrayList;
+        //создаём интент
+        Intent intent = new Intent(this, LoopActivity.class);
+        intent.putExtra("loopStrings", loopMes);
+        startActivity(intent);
+    }
+
     public void onClickLoop(View view) {
         //вытаскиваем текстовое поле с цифрами
         TextView loopView = (TextView) findViewById(R.id.time_view);
-        ArrayList<String> loopArrayList = new ArrayList<>();
         //вытаскиваем текст
         String loopText = loopView.getText().toString();
-        //создаём интент
-        Intent intent = new Intent(this, LoopActivity.class);
-        intent.putExtra("loopStrings", loopText);
-        startActivity(intent);
+        loopArrayList.add(loopText);
     }
 
     protected void onStop() {

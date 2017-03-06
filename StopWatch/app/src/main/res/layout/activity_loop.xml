@@ -10,9 +10,17 @@
         android:id="@+id/loopStrings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteY="-7dp"
+        android:text=""
+        tools:layout_editor_absoluteY="38dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.144" />
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:text="@string/back"
+        android:onClick="onClickBack"
+        tools:layout_editor_absoluteX="276dp"
+        tools:layout_editor_absoluteY="358dp" />
 </android.support.constraint.ConstraintLayout>

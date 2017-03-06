@@ -64,10 +64,10 @@
         android:id="@+id/showLoopButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/loop"
-        android:layout_below="@+id/loop"
         android:layout_marginTop="10dp"
         android:onClick="onClickShowLoop"
-        android:text="@string/show_loops" />
+        android:text="@string/show_loops"
+        android:layout_below="@+id/loopButton"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
