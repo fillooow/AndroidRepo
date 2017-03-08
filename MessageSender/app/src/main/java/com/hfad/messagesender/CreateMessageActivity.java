@@ -38,7 +38,10 @@ public class CreateMessageActivity extends AppCompatActivity {
         Intent intentSender = new Intent(Intent.ACTION_SEND);
         intentSender.setType("text/plain");
         intentSender.putExtra(Intent.EXTRA_TEXT, messageTextSender);
+        //получаем значение строкового ресурса
+        //это заголовок в окошке выбора
         String chooserTitle = getString(R.string.chooser);
+        //startActivity(intentSender, chooserTitle); не пашет, ибо нужен API 16, а тут 15
         startActivity(intentSender);
     }
 }
