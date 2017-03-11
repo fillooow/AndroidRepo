@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">LayoutTestProject</string>
+    <string name="nihuya"></string>
+    <string name="milk">Milk</string>
+    <string name="sugar">Sugar</string>
+    <string name="lemon">Lemon</string>
+    <string name="ice">Ice</string>
+    <string name="your_servering">Thanks for choosing out awesome blend tea. How do you want it serving?</string>
+    <string name="temper">Temperature: </string>
+    <string name="hot">HOTTER</string>
+    <string name="cold">COLDER</string>
+</resources>
