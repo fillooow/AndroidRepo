@@ -29,39 +29,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hot"
-        android:layout_marginStart="26dp"
-        android:layout_below="@+id/yourServingTextView"
-        android:layout_toEndOf="@+id/temperature"
-        android:layout_marginTop="85dp"
-        android:onClick="onClickHotButton"/>
+        android:layout_marginTop="56dp"
+        android:onClick="onClickHotButton"
+        android:layout_marginEnd="88dp"
+        android:layout_below="@+id/degrees"
+        android:layout_alignParentEnd="true" />
 
     <CheckBox
         android:id="@+id/checkbox_milk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="89dp"
+        android:layout_marginTop="87dp"
         android:text="@string/milk"
+        android:onClick="onCheckboxClicked"
         android:layout_below="@+id/hotButton"
-        android:layout_toStartOf="@+id/hotButton"
-        android:onClick="onCheckboxClicked"/>
+        android:layout_alignEnd="@+id/temperature" />
 
     <CheckBox
         android:id="@+id/checkbox_sugar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sugar"
+        android:onClick="onCheckboxClicked"
         android:layout_below="@+id/checkbox_milk"
-        android:layout_alignStart="@+id/checkbox_milk"
-        android:onClick="onCheckboxClicked"/>
+        android:layout_alignStart="@+id/checkbox_milk" />
 
     <CheckBox
         android:id="@+id/checkbox_lemon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lemon"
+        android:onClick="onCheckboxClicked"
         android:layout_below="@+id/checkbox_sugar"
-        android:layout_alignStart="@+id/checkbox_sugar"
-        android:onClick="onCheckboxClicked"/>
+        android:layout_alignStart="@+id/checkbox_sugar" />
 
     <Button
         android:id="@+id/coldButton"
@@ -69,11 +69,11 @@
         android:layout_height="wrap_content"
         android:text="@string/cold"
         android:layout_marginLeft="52dp"
+        android:onClick="onClickColdButton"
         android:layout_alignBaseline="@+id/hotButton"
         android:layout_alignBottom="@+id/hotButton"
-        android:layout_toEndOf="@+id/hotButton"
-        android:layout_marginStart="23dp"
-        android:onClick="onClickColdButton"/>
+        android:layout_toStartOf="@+id/hotButton"
+        android:layout_marginEnd="33dp" />
 
     <TextView
         android:id="@+id/degrees"
@@ -88,9 +88,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ice"
+        android:onClick="onCheckboxClicked"
         android:layout_below="@+id/checkbox_lemon"
-        android:layout_alignStart="@+id/checkbox_lemon"
-        android:onClick="onCheckboxClicked"/>
+        android:layout_alignStart="@+id/checkbox_lemon" />
 
 
 </RelativeLayout>

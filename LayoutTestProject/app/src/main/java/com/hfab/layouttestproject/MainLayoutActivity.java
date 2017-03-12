@@ -30,11 +30,11 @@ public class MainLayoutActivity extends AppCompatActivity {
     //проверяем, нужно ли нам выключать кнопки
     public void needToDisable (int temp) {
         if (temp == 35) {
-            text = "Минимальная температура 35'";
+            text = "Минимальная температура 35 градусов";
             getToaster();
             coldButt.setEnabled(false);
         } else if (temp == 95){
-            text = "Максимальная температура 95'";
+            text = "Максимальная температура 95 градусов";
             getToaster();
             hotButt.setEnabled(false);
 

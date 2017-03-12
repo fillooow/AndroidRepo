@@ -53,10 +53,10 @@ public class StopWatchActivity extends AppCompatActivity {
     }
 
     public void onClickShowLoop(View view) {
-        ArrayList<String> loopMes = loopArrayList;
+        //ArrayList<String> loopMes = loopArrayList;
         //создаём интент
         Intent intent = new Intent(this, LoopActivity.class);
-        intent.putExtra("loopStrings", loopMes);
+        intent.putExtra("loopStrings", loopArrayList);
         startActivity(intent);
     }
 
