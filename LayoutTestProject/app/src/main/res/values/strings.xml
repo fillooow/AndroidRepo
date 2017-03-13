@@ -9,4 +9,5 @@
     <string name="temper">Temperature: </string>
     <string name="hot">HOTTER</string>
     <string name="cold">COLDER</string>
+    <string name="make_tea">MAKE TEA</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.hfab.layouttestproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +11,15 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class MainLayoutActivity extends AppCompatActivity {
     private Toast toaster;
-    private CharSequence text = "";
+    private CharSequence text = ""; //это для уведомлений
     private int duration = Toast.LENGTH_SHORT;
     private int intTemperature = 70;
+    private ArrayList<String> yourTea = new ArrayList<>(); //а это массив добавок
+    private String add; //тут храним добавки
 
     //кнопки у нас определены глобально, но ссылки мы получаем в onCreate()
     private Button coldButt;
@@ -44,6 +49,19 @@ public class MainLayoutActivity extends AppCompatActivity {
         }
     }
 
+    /*//сюда помещаем входные данные для чая, который будем готовить, это если флажок поставлен
+    private void setTea(String additive) { yourTea.add(additive);    }
+
+    //удаляем данные для чая, если снимается флажок
+     public void removeTea(String additiveRem) {  yourTea.remove(yourTea.indexOf(additiveRem));   }*/
+
+    public void teaMaker(String additive, boolean check) {
+        if (check)
+            yourTea.add(additive);
+        else
+            yourTea.remove(yourTea.indexOf(additive));
+    }
+
     //выводит уведомление
     private void getToaster () {
         toaster = Toast.makeText(this, text, duration);
@@ -66,7 +84,7 @@ public class MainLayoutActivity extends AppCompatActivity {
     public void onClickColdButton(View view) {
         if (intTemperature < 40) { //минимальная температура 35, 40 не меньше 40,
             return; //выход из метода, код ниже не компилируется, если
-            //мы жостигли 35 градусов
+            //мы достигли 35 градусов
         }
         intTemperature -= 5;
         showTemperature();
@@ -83,48 +101,41 @@ public class MainLayoutActivity extends AppCompatActivity {
         needToDisable(intTemperature);
     }
 
+    public void onClickMakeTea(View view) {
+        Intent teaIntent = new Intent(this, YourTeaActivity.class);
+        teaIntent.putExtra("readyTea", yourTea);
+        startActivity(teaIntent);
+
+    }
+
     public void onCheckboxClicked(View view) {
         //Проверка установки флажка, на которй щёлкал пользователь
         boolean checked = ((CheckBox) view).isChecked();
 
         //определяем флажок, на который кликнул пользователь
         switch(view.getId()) {
-            case R.id.checkbox_lemon:
-                if (checked) {
-                    text = "lemon";
-                    toaster = Toast.makeText(this, "you choose  " + text, duration);
-                    toaster.show();
-                }
-                else {
-                    text = "lemon";
-                    toaster = Toast.makeText(this, "you choose " + text, duration);
-                    toaster.show();
-                }
-                break;
             case R.id.checkbox_milk:
-                if (checked) {
-                    text = "milk";
-                    toaster = Toast.makeText(this, "you choose " + text, duration);
-                    toaster.show();
-                }
-                //else {                }
+                add = "milk";
+                teaMaker(add, checked);
                 break;
             case R.id.checkbox_sugar:
-                if (checked) {
-                    text = "sugar";
-                    toaster = Toast.makeText(this, "you choose " + text, duration);
-                    toaster.show();
-                }
-                //else {                }
+                add = "sugar";
+                teaMaker(add, checked);
+                break;
+            case R.id.checkbox_lemon:
+                add = "lemon";
+                teaMaker(add, checked);
                 break;
             case R.id.checkbox_ice:
+                add = "ice";
                 if (checked) {
                     intTemperature = 35;
                     showTemperature();
-
+                    yourTea.add(add);
                     hotButt.setEnabled(false);
                     coldButt.setEnabled(false);
                 } else {
+                    yourTea.remove(yourTea.indexOf(add));
                     hotButt.setEnabled(true);
                     coldButt.setEnabled(true);
                 }

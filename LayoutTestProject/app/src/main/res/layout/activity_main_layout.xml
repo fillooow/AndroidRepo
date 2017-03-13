@@ -92,5 +92,15 @@
         android:layout_below="@+id/checkbox_lemon"
         android:layout_alignStart="@+id/checkbox_lemon" />
 
+    <Button
+        android:id="@+id/makeTeaButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkbox_lemon"
+        android:layout_alignEnd="@+id/hotButton"
+        android:text="@string/make_tea"
+        android:onClick="onClickMakeTea"
+        />
+
 
 </RelativeLayout>
