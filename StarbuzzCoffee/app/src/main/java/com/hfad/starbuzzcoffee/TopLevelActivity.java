@@ -20,10 +20,14 @@ public class TopLevelActivity extends AppCompatActivity {
 
         //слушатель onItemClickListener отслеживает щелчки на вариантах списка
         //onItemClick определяет действия для щелчка
-        AdapterView.OnItemClickListener itemClickListener = (listView, itemView, position, id) -> {
-            if (position == 0) {
-                Intent intent = new Intent(TopLevelActivity.this, DrinkCategoryActivity.class);
-                startActivity(intent);
+        AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            //1. Списковое представление, 2. Представление, 3. Позиция в списке, 4. Идентификатор
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    Intent intent = new Intent(TopLevelActivity.this, DrinkCategoryActivity.class);
+                    startActivity(intent);
+                }
             }
         };
         ListView listView = (ListView) findViewById(R.id.list_options);
