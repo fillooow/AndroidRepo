@@ -3,7 +3,7 @@ package com.hfad.workout;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.Fragment; //баганутое говно, проще импортировать android.app.Fragment
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import android.widget.ArrayAdapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WorkoutListFragment extends ListFragment {
+public class WorkoutListFragment extends ListFragment { //расширяется, тк есть фрагмент
 
     static interface WorkoutListListener {
         void itemClicked(long id);
