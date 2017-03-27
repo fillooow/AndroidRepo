@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
                 pasteData = (String) item.getText();
-                if (checkPasteData.equals(pasteData))
-                    return;
+                if (checkPasteData.equals(pasteData)) {
+
+                }
                 else {
                     textView.append("\n" + pasteData);
                     checkPasteData = pasteData;
