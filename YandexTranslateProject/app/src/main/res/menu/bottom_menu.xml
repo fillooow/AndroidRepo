@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_search">
+    </item>
+    <item
+        android:id="@+id/action_cart"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_cart">
+    </item>
+    <item
+        android:id="@+id/action_hot_deals"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_hot_deals">
+    </item>
+
+</menu>
