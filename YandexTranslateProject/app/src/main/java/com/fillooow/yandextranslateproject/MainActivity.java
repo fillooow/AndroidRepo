@@ -24,17 +24,18 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
+            //#ffcc00 - цвет яндекса
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id){
-                    case R.id.action_search:
-                        fragment = new SearchFragment();
+                    case R.id.action_translate:
+                        fragment = new TranslateFragment();
                         break;
-                    case R.id.action_cart:
-                        fragment = new CartFragment();
+                    case R.id.action_bookmark:
+                        fragment = new BookmarksFragment();
                         break;
-                    case R.id.action_hot_deals:
-                        fragment = new DealsFragment();
+                    case R.id.action_settings:
+                        fragment = new SettingsFragment();
                         break;
                 }
                 final FragmentTransaction transaction = fragmentManager.beginTransaction();

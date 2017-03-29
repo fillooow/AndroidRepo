@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_translate"
         android:title=""
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/ic_action_search">
+        android:icon="@drawable/ic_action_translate">
     </item>
     <item
-        android:id="@+id/action_cart"
+        android:id="@+id/action_bookmark"
         android:title=""
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/ic_action_cart">
+        android:icon="@drawable/ic_action_bookmarks">
     </item>
     <item
-        android:id="@+id/action_hot_deals"
+        android:id="@+id/action_settings"
         android:title=""
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/ic_action_hot_deals">
+        android:icon="@drawable/ic_action_settings">
     </item>
 
 </menu>
