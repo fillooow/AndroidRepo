@@ -10,15 +10,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TranslateFragment extends Fragment {
     protected String textToTranslate; // Текст для перевода, выцепляем из textField
+    protected String translatedText; // Переведённый текст
     protected EditText textField; // Отсюда цепляем текст, который будем переводить
     protected TextView testText;
-    protected boolean running = true; // Резерв под синхронность перевода
 
     public TranslateFragment() {
         // Required empty public constructor
@@ -34,7 +36,14 @@ public class TranslateFragment extends Fragment {
             @Override
             public void run() {
                 textToTranslate = textField.getText().toString();
-                testText.setText(textToTranslate);
+                //testText.setText(textToTranslate); // Вот сюда мы должны запихать перевод
+                Translate translateObj = new Translate();
+                translateObj.setText(textToTranslate);
+                TranslateJson tj = new TranslateJson();
+
+                tj.doInBackground();
+
+                testText.setText(translatedText);
                 handler.post(this); // Рекурсируем метод, с помощью такой реализации
                 // мы постоянно обновляем View
             }

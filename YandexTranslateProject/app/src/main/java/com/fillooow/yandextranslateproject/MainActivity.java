@@ -10,18 +10,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+
+    //private static final String TAG = MainActivity.class.getSimpleName();
     private BottomNavigationView bottomNavigation;
     private Fragment fragment;
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         bottomNavigation = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigation.inflateMenu(R.menu.bottom_menu);
-        fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager(); // У нас саппорт библиотека,
+        // поэтому используется getSupportFragmentManager()
+
+        // Не особо понял эту уличную магию, но нам и и установку фрагмента при запуске
+        // нужно обрабатывать транзакцией, видимо, невнимательно прочитал, раз думал, что транзакции
+        // нужны лишь для смены фрагментов, а не для любой работы с ними
+        final FragmentTransaction trans = fragmentManager.beginTransaction().replace(R.id.main_container, new TranslateFragment());
+        trans.commit(); // Подтверждение транзакции на установку стартового фрагмента
+
+        // Вся нижняя навигация обрабатывается тута через кейсы через слушателя
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             //#ffcc00 - цвет яндекса
