@@ -3,6 +3,7 @@ package com.fillooow.clipboardproject;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    private StringBuffer sharedPreferencesText = new StringBuffer("");
+public class MainActivity extends AppCompatActivity/* implements ClipboardTextListFragment.ClipboardListListener*/{
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /*@Override
+    public void itemClicked(long id) {
+        Intent intent = new Intent(this, )
+    }*/
+}
+
+
+
+
+
+    /*private StringBuffer sharedPreferencesText = new StringBuffer("");
     private String text = "";
     private String textOnSave = "";
     String pasteData = "";
@@ -103,5 +122,5 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = mSettings.edit(); // Получаем ссылку на эдитор
         editor.putString(PREF_TEXT, textToSave); // Сейвим текст
         editor.apply();
-    }
-}
+    }*/
+
