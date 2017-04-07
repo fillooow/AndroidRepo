@@ -15,6 +15,26 @@
         <item>Ya napisal eto na OYD</item>
     </string-array>
 
+    <string-array name="pasta">
+        <item>Spaghetti Bolognese</item>
+        <item>Lasagne</item>
+        <item>Alex and Sophia</item>
+        <item>Makfa</item>
+        <item>Doshirak</item>
+    </string-array>
+
+    <string-array name="stores">
+        <item>Cambridge</item>
+        <item>Sebastopol</item>
+        <item>Grinvich</item>
+    </string-array>
+
+    <string-array name="titles">
+        <item>Home</item>
+        <item>Pizzas</item>
+        <item>Paste</item>
+        <item>Stores</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
