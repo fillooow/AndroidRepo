@@ -2,4 +2,19 @@
     <string name="app_name">Bits and Pizzas</string>
     <string name="action_settings">Settings</string>
     <string name="action_create_order">Create Order</string>
+    <string name="action_share">Share</string>
+    <string name="title_top">Top fragment</string>
+
+    <string-array name="pizzas">
+        <item>Diavolo</item>
+        <item>Pepperoni</item>
+        <item>Funghi</item>
+        <item>Huylo</item>
+        <item>Denis pidor</item>
+        <item>Greece</item>
+        <item>Ya napisal eto na OYD</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

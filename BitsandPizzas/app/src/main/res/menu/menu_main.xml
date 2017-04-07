@@ -9,6 +9,17 @@
         android:icon="@drawable/ic_action_test_icon"
         app:showAsAction="ifRoom"/>
 
+    <!-- ifRoom - выыводит, если есть место
+     последняя строка - атрибут, позволяющий опрделять провайдера
+     действия передачи информации-->
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/action_share"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:actionProviderClass="android.widget.ShareActionProvider"/>
+
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
