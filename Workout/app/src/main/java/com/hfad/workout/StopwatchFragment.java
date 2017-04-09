@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Button;
 
+// Наследование этого интерфейса позволяет реагировать на щелчки на представлениях во фрагменте
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
     //Number of seconds displayed on the stopwatch.
     private int seconds = 0; //количество секунд от начала работы
@@ -38,7 +39,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         View layout = inflater.inflate(R.layout.fragment_stopwatch, container, false);
         runTimer(layout); //передаём макет при вызове runTimer
         Button startButton = (Button) layout.findViewById(R.id.start_button);
-        startButton.setOnClickListener(this);
+        startButton.setOnClickListener(this); // назначение слушателя на кнопку
         Button stopButton = (Button) layout.findViewById(R.id.stop_button);
         stopButton.setOnClickListener(this);
         Button resetButton = (Button) layout.findViewById(R.id.reset_button);
@@ -70,6 +71,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     @Override
+    // Принимает представление, на которое щёлкнул пользователь
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start_button:

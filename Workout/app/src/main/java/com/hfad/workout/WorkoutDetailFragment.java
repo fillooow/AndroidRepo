@@ -3,6 +3,7 @@ package com.hfad.workout;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,14 @@ public class WorkoutDetailFragment extends Fragment {
         if (savedInstanceState != null) {
             workoutId = savedInstanceState.getLong("workoutId");
         }
+        // getChildFragmentManager() привязывается к родительскому фрагменту, он входит в его последнюю транзацкию
+        // поэтому не будет разделения на две транзацкии между созданием фаргмента и созданием секундомера (их отображения)
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        StopwatchFragment stopwatchFragment = new StopwatchFragment();
+        ft.replace(R.id.stopwatch_container, stopwatchFragment);
+        ft.addToBackStack(null); // добавляем транзакцию в стек возврата
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE); //стиль анмации перехода
+        ft.commit();
         //возвращаем объект типа View для прорисовки пользовательского интерфейса
         return inflater.inflate(R.layout.fragment_workout_detail, container, false);
     }

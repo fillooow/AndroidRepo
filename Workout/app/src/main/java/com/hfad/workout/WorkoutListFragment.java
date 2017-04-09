@@ -20,7 +20,7 @@ public class WorkoutListFragment extends ListFragment { //расширяется
     static interface WorkoutListListener {
         void itemClicked(long id);
     }
-    //добавляем слушателя к фрагменту ^ и V
+    //добавляем слушателя к фрагменту ^ и V (это тип стрелочки, лол)
     private WorkoutListListener listener;
 
     public WorkoutListFragment() {

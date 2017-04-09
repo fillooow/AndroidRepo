@@ -18,14 +18,18 @@ public class MainActivity extends AppCompatActivity implements WorkoutListFragme
 
     @Override
     public void itemClicked(long id) {
-        //Получем ссылку на фрейм, содержащий WorkoutDetailFragment, он существует лишь если приложение
-        //выполняется на большом экране
+        // Получем ссылку на фрейм, содержащий WorkoutDetailFragment, он существует лишь если приложение
+        // выполняется на большом экране
         View fragmentContainer = findViewById(R.id.fragment_container);
-        if (fragmentContainer == null) {
-            //Код для отображения подробной информации
-            //Этот метод определяется в слушателе
-            WorkoutDetailFragment details = new WorkoutDetailFragment();
-            //Ругается на импорт android.app.v4.FT;
+        if (fragmentContainer != null) {
+            // Код для отображения подробной информации
+            // Этот метод определяется в слушателе
+            WorkoutDetailFragment details = new WorkoutDetailFragment(); //экземпляр фрагмента, который нужно отразить
+            // Ругается на импорт android.app.v4.FT;
+
+            // getFragmentManager() возвращает ссылку на диспетчер фаргментов для активности
+            // это означает, что транзакция фрагмента привязывается к родительской активности
+            // не работает для фрейма внутри фрейма
             FragmentTransaction ft = getFragmentManager().beginTransaction(); //начало транзакции фрагмента
             details.setWorkout(id);
             ft.replace(R.id.fragment_container, details); //заменяем фрагмент
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutListFragme
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE); //анимация растворения и проявления фрагментов
             ft.commit(); //закрепление транзакции
         } else {
-            //если фрейм отсутствует, запускаем DetailActivity
+            // если фрейм отсутствует, запускаем DetailActivity
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(DetailActivity.EXTRA_WORKOUT_ID, (int) id);
             startActivity(intent);
