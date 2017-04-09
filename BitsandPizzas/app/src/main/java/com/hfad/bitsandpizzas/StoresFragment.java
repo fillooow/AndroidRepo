@@ -1,7 +1,7 @@
 package com.hfad.bitsandpizzas;
 
 
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +29,7 @@ public class StoresFragment extends ListFragment{
                 android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.stores));
         setListAdapter(adapter);
-        return inflater.inflate(R.layout.fragment_stores, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 }

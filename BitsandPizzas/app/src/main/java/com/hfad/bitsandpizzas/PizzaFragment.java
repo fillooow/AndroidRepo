@@ -3,7 +3,7 @@ package com.hfad.bitsandpizzas;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +24,8 @@ public class PizzaFragment extends ListFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 inflater.getContext(), android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.pizzas));
-        return inflater.inflate(R.layout.fragment_pizza, container, false);
+        setListAdapter(adapter);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 }
