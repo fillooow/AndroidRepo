@@ -35,6 +35,8 @@ public class ClipboardTextListFragment extends ListFragment{
         ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0); // Получаем первый айтем из буфера обмена
         text = item.getText().toString(); // Получаем текст из буфера
         helper.setClipboardTextArrayList(text);
+        text = "sosi";
+        helper.setClipboardTextArrayList(text);
 
         //создаём адаптер массива
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
