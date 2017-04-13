@@ -17,18 +17,18 @@ public class DrinkActivity extends AppCompatActivity {
         Drink drink = Drink.drinks[drinkNo];
 
         ImageView photo = (ImageView) findViewById(R.id.photo);
-        //источник данных графического поля назначается вызовом sIR()
-        //либо в макете android:src
+        // Источник данных графического поля назначается вызовом sIR()
+        // либо в макете android:src
         photo.setImageResource(drink.getImageResourceId());
-        //это для повышения уровня доступности приложения
-        //либо можно в макете прописать android:contentDescription
+        // Это для повышения уровня доступности приложения
+        // Либо можно в макете прописать android:contentDescription
         photo.setContentDescription(drink.getName());
 
-        //название напитка
+        // Название напитка
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(drink.getName());
 
-        //описание напитка
+        // Описание напитка
         TextView description = (TextView) findViewById(R.id.description);
         description.setText(drink.getDescription());
     }
