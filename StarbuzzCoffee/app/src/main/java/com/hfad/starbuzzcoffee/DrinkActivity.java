@@ -67,6 +67,7 @@ public class DrinkActivity extends AppCompatActivity {
     // Обновляем БД по щелчку
     public void onFavoriteClicked (View view) {
         int drinkNo = (Integer) getIntent().getExtras().get(EXTRA_DRINKNO);
+        // Передаём в метод execute() объекта AsyncTask, параметр - значение, принимаемое doInBackground()
         new UpdateDrinkTask().execute(drinkNo); // Выполняем задачу
 
         /*CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
@@ -85,27 +86,43 @@ public class DrinkActivity extends AppCompatActivity {
     }
 
     // Params (для doInBackGround), Progress (для onProgressUpdate) и Result (onPostExecute)
+    // Тип переменной Params - тип переменной, которую передаём в doInBackground()
+    // Тип переменной Progress - тип переменной, которую передаём в onProgressUpdate()
+    // Тип переменной Result - тип переменной, которую возвращает doInBackground() в onPostExecute
     private class UpdateDrinkTask extends AsyncTask<Integer, Void, Boolean> {
         ContentValues drinkValues;
 
+        // Код, предшествующий выполнению задачи
         @Override
         protected void onPreExecute() {
+            // Получаем значение флажка любимого напитка
             CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
             drinkValues = new ContentValues();
+            // Помещаем в переменную типа ContentValues значение для любимого напитка
             drinkValues.put("FAVORITE", favorite.isChecked());
         }
 
+        // Код, выполняемый в фоновом потоке
         @Override
         protected Boolean doInBackground(Integer... drinks) {
             int drinkNo = drinks[0];
             SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(DrinkActivity.this);
             try {
                 SQLiteDatabase db = starbuzzDatabaseHelper.getWritableDatabase();
-                db.update("DRINK", drinkValues,
+                db.update("DRINK", drinkValues, // Обновляем значение столбца FAVORITE
                         "_id = ?", new String[] { Integer.toString(drinkNo) });
                 db.close();
+                return true;
             } catch (SQLiteException e) {
                 return false;
+            }
+        }
+
+        // Код, выполняемый по завершении задачи
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (!success) {
+                Toast.makeText(DrinkActivity.this, "Database unavailable", Toast.LENGTH_SHORT).show();
             }
         }
     }
