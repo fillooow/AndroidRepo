@@ -2,5 +2,6 @@
     <string name="app_name">Yandex Translate Project</string>
     <string name="translate_fragment">Translate Fragment</string>
     <string name="bookmark_fragment">Bookmark Fragment</string>
-    <string name="settngs_fragment">Settings Fragment</string>
+    <string name="settings_fragment">Settings Fragment</string>
+    <string name="default_text">text</string>
 </resources>

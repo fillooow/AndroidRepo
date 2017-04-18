@@ -6,7 +6,7 @@ tools:context="layout.FragmentDeals">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/settngs_fragment"
+    android:text="@string/settings_fragment"
     android:textStyle="bold"
     android:layout_gravity="center"/>
 </FrameLayout>

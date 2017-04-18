@@ -1,6 +1,7 @@
 package com.fillooow.yandextranslateproject;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,8 @@ import java.io.IOException;
  */
 public class TranslateFragment extends Fragment {
     protected String textToTranslate; // Текст для перевода, выцепляем из textField
-    protected String translatedText; // Переведённый текст
-    protected EditText textField; // Отсюда цепляем текст, который будем переводить
+    protected String translatedText= ""; // Переведённый текст
+    protected EditText testField; // Отсюда цепляем текст, который будем переводить
     protected TextView testText;
 
     public TranslateFragment() {
@@ -29,25 +30,42 @@ public class TranslateFragment extends Fragment {
     // Метод, в котором происходит перевод текста
     public void onTranslate() {
         View view = getView();
-        textField = (EditText) view.findViewById(R.id.inputedText);
+        testField = (EditText) view.findViewById(R.id.inputedText);
         testText = (TextView) view.findViewById(R.id.testText);
         final Handler handler = new Handler(); // Реализуем всё в отдельном потоке
         handler.post(new Runnable() {
             @Override
             public void run() {
-                textToTranslate = textField.getText().toString();
+                textToTranslate = testField.getText().toString(); // Получаем введённый текст
                 //testText.setText(textToTranslate); // Вот сюда мы должны запихать перевод
-                Translate translateObj = new Translate();
-                translateObj.setText(textToTranslate);
-                TranslateJson tj = new TranslateJson();
+                //Translate translateObj = new Translate();
+                //translateObj.setText(textToTranslate);
+                //TranslateJson tj = new TranslateJson();
+                //tj.doInBackground();
 
-                tj.doInBackground();
+                new TranslateJsonTask().execute(textToTranslate);
 
-                testText.setText(translatedText);
+                //testText.setText(textToTranslate);
                 handler.post(this); // Рекурсируем метод, с помощью такой реализации
                 // мы постоянно обновляем View
             }
         });
+    }
+
+    private class TranslateJsonTask extends AsyncTask <String, Void, String> {
+        private String text;
+
+        @Override
+        protected String doInBackground(String... params) {
+            text = params[0] + " катя не спит";
+            return text;
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            super.onPostExecute(string);
+            testText.setText(string);
+        }
     }
 
 
