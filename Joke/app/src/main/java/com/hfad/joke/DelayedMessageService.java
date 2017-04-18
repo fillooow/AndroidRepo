@@ -11,11 +11,12 @@ import android.content.Intent;
 // import android.os.Handler; // Used in Toast version
 // import android.widget.Toast; // Used in Toast version
 
-public class DelayedMessageService extends IntentService {
+public class
+DelayedMessageService extends IntentService {
 
     public static final String EXTRA_MESSAGE = "message";
     // private Handler handler; // Использовали в тостах
-    public static final int NOTIFICATION_ID = 5453;
+    public static final int NOTIFICATION_ID = 5453; // Идентификатор уведомления (рандом)
     
     public DelayedMessageService() {
         super("DelayedMessageService");
@@ -53,22 +54,28 @@ public class DelayedMessageService extends IntentService {
 
 
         Intent intent = new Intent(this, MainActivity.class);
+        // Используем TaskBuilder для верной работы кнопки Назад
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(intent);
+        //
         PendingIntent pendingIntent =
-            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                // Получаем отложенный объект (код запроса (идентификатор), флаг)
+            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT); //  Обновляем текущий новым
+        // Строим объект уведомленияппп
         Notification notification = new Notification.Builder(this)
             .setSmallIcon(R.mipmap.ic_launcher) // Выводим маленькую иконку на выбор
             .setContentTitle(getString(R.string.app_name)) // Задаём заголовок
             .setAutoCancel(true) // Уведомление исчезает при щелчке, при false остаётся до смахивания
             .setPriority(Notification.PRIORITY_MAX) // Максимальный приоритет
             .setDefaults(Notification.DEFAULT_VIBRATE) // Вибрация
-            .setContentIntent(pendingIntent)
+            .setContentIntent(pendingIntent) // Добавляем отложенный интент в уведомлпние
             .setContentText(text) // Задаём текст
             .build();
+        // Обращение к службе уведомлений Android
         NotificationManager notificationManager =
             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // Выводим уведомление
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 }
