@@ -3,5 +3,5 @@
     <string name="translate_fragment">Translate Fragment</string>
     <string name="bookmark_fragment">Bookmark Fragment</string>
     <string name="settings_fragment">Settings Fragment</string>
-    <string name="default_text">text</string>
+    <string name="default_text">Hello cruel world</string>
 </resources>

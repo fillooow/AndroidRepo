@@ -15,22 +15,20 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.io.IOException;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TranslateFragment extends Fragment {
-    protected String textToTranslate; // Текст для перевода, выцепляем из textField
-    protected String translatedText= ""; // Переведённый текст
-    protected EditText testField; // Отсюда цепляем текст, который будем переводить
-    protected TextView testText;
+    protected String textToTranslate; // Текст для перевода, выцепляем из editTextField
+    protected String wasText = ""; // Переведённый текст
+    protected EditText editTextField; // Отсюда цепляем текст, который будем переводить
+    protected TextView textViewField; // Сюда загоняем текст, который перевели
 
     public TranslateFragment() {
         // Required empty public constructor
@@ -39,23 +37,25 @@ public class TranslateFragment extends Fragment {
     // Метод, в котором происходит перевод текста
     public void onTranslate() {
         View view = getView();
-        testField = (EditText) view.findViewById(R.id.inputedText);
-        testText = (TextView) view.findViewById(R.id.testText);
+        editTextField = (EditText) view.findViewById(R.id.inputedText);
+        textViewField = (TextView) view.findViewById(R.id.testText);
         final Handler handler = new Handler(); // Реализуем всё в отдельном потоке
         handler.post(new Runnable() {
             @Override
             public void run() {
-                textToTranslate = testField.getText().toString(); // Получаем введённый текст
-                //testText.setText(textToTranslate); // Вот сюда мы должны запихать перевод
-                //Translate translateObj = new Translate();
-                //translateObj.setText(textToTranslate);
-                //TranslateJson tj = new TranslateJson();
-                //tj.doInBackground();
+                textToTranslate = editTextField.getText().toString(); // Получаем введённый текст
 
-                new TranslateJsonTask().execute(textToTranslate);
+                // Если пустое поле, всё прибиваем ручками
+                if (textToTranslate.equals("")) {
+                    wasText = textToTranslate;
+                    textViewField.setText("");
+                    handler.postDelayed(this, 1000);
+                }
 
-                //testText.setText(textToTranslate);
-                handler.post(this); // Рекурсируем метод, с помощью такой реализации
+                if (!(wasText.equals(textToTranslate)))
+                    new TranslateJsonTask().execute(textToTranslate);
+                wasText = textToTranslate;
+                handler.postDelayed(this, 1000); // Рекурсируем метод, с помощью такой реализации
                 // мы постоянно обновляем View
             }
         });
@@ -73,8 +73,8 @@ public class TranslateFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            text = params[0];
-            /*translate.setTranslateText(text);
+            text = params[0]; // Получаем введённый текст
+            translate.setTranslateText(text);
             try {
                 URLConnection connection = new URL(translate.getYandexURL()
                         + "?key="
@@ -89,20 +89,17 @@ public class TranslateFragment extends Fragment {
                 // те, выведенного в in потока
                 TranslateClass translated = gson.fromJson(in.readLine(), TranslateClass.class);
                 in.close(); // Закрываем поток
-                text = translated.getResponse();
-            } catch (IOException e) {
-                // e.printStackTrace();
-                // Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-                // toast.show();
+                text = translated.getResponse(); // Получаем ответ сервера из Json объекта
+            } catch (IOException e) { // В случае ошибки, выводим тост
                 Toast.makeText(getActivity(), "Чёт факапнулось", Toast.LENGTH_SHORT).show();
-            }*/
+            }
             return text;
         }
 
         @Override
         protected void onPostExecute(String string) {
             super.onPostExecute(string);
-            testText.setText(string);
+            textViewField.setText(string); // Ставим переведённый текст
         }
     }
 
@@ -118,6 +115,6 @@ public class TranslateFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        onTranslate();
+        onTranslate(); // Вызываем на старте наш метод для перевода
     }
 }
