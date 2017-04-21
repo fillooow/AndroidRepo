@@ -29,12 +29,13 @@ tools:context="com.fillooow.yandextranslateproject.TranslateFragment">
             android:layout_alignParentStart="true" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/translateSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/testText"
             android:layout_toEndOf="@+id/inputedText"
-            android:text="Switch" />
+            android:textOn="@string/switch_on"
+            android:textOff="@string/switch_off"/>
     </RelativeLayout>
 
 </FrameLayout>

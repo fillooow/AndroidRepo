@@ -1,7 +1,7 @@
 package com.fillooow.yandextranslateproject;
 
 /**
- * Created by Fillow on 28.03.2017.
+ * Фрагмент с закладками и историей
  */
 
 import android.os.Bundle;

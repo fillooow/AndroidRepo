@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,23 +24,69 @@ import java.net.URLEncoder;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Фрагмент, в котором происходит работа с переводом
+ * Вложенный класс TranslateJsonTask работает с AsyncTask и обращается
+ * к классу TranslateClass, в котором идёт работа с объектом Gson
  */
 public class TranslateFragment extends Fragment {
     protected String textToTranslate; // Текст для перевода, выцепляем из editTextField
     protected String wasText = ""; // Переведённый текст
+    protected String langTranslate = ""; // Направление перевода
+    protected String wasLangTranslate = ""; // Направление перевода
+
     protected EditText editTextField; // Отсюда цепляем текст, который будем переводить
     protected TextView textViewField; // Сюда загоняем текст, который перевели
+    protected Switch testSwitch; // Тестовая кнопка переключения языка
+    protected View view;
 
     public TranslateFragment() {
         // Required empty public constructor
     }
 
-    // Метод, в котором происходит перевод текста
-    public void onTranslate() {
-        View view = getView();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_translate, container, false);
+    }
+
+    // TODO: нужно будет закрыть поток в onDestroy()
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        view = getView();
         editTextField = (EditText) view.findViewById(R.id.inputedText);
         textViewField = (TextView) view.findViewById(R.id.testText);
+        testSwitch = (Switch) view.findViewById(R.id.translateSwitch);
+
+
+
+        testSwitch.setChecked(false);
+
+        // Слушатель для смены языка
+        testSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (testSwitch.isChecked())
+                    langTranslate = "en-ru";
+                else
+                    langTranslate = "ru-en";
+            }
+        });
+
+        onTranslate(); // Вызываем на старте наш метод для перевода
+    }
+
+
+    // Метод, в котором происходит перевод текста
+    public void onTranslate() {
+        // Очень странный баг, всё факапается, если не прибить вручную, хоть я и сделал это
+        // в слушателе
+        if (testSwitch.isChecked())
+            langTranslate = "en-ru";
+        else
+            langTranslate = "ru-en";
         final Handler handler = new Handler(); // Реализуем всё в отдельном потоке
         handler.post(new Runnable() {
             @Override
@@ -49,32 +97,36 @@ public class TranslateFragment extends Fragment {
                 if (textToTranslate.equals("")) {
                     wasText = textToTranslate;
                     textViewField.setText("");
-                    handler.postDelayed(this, 1000);
+                    handler.postDelayed(this, 500);
                 }
 
                 if (!(wasText.equals(textToTranslate)))
-                    new TranslateJsonTask().execute(textToTranslate);
+                    new TranslateJsonTask().execute(textToTranslate, langTranslate);
                 wasText = textToTranslate;
-                handler.postDelayed(this, 1000); // Рекурсируем метод, с помощью такой реализации
+                wasLangTranslate = langTranslate;
+                handler.postDelayed(this, 500); // Рекурсируем метод, с помощью такой реализации
                 // мы постоянно обновляем View
             }
         });
     }
 
+
+
+
+
     private class TranslateJsonTask extends AsyncTask <String, Void, String> {
         private String text;
+        private String language;
         Gson gson = new Gson();
         TranslateClass translate = new TranslateClass();
-
-        @Override
-        protected void onPreExecute() {
-            translate.setLang("en-ru");
-        }
 
         @Override
         protected String doInBackground(String... params) {
             text = params[0]; // Получаем введённый текст
             translate.setTranslateText(text);
+
+            language = params[1];
+            translate.setLang(language);
             try {
                 URLConnection connection = new URL(translate.getYandexURL()
                         + "?key="
@@ -101,20 +153,5 @@ public class TranslateFragment extends Fragment {
             super.onPostExecute(string);
             textViewField.setText(string); // Ставим переведённый текст
         }
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_translate, container, false);
-    }
-
-    // TODO: нужно будет закрыть поток в onDestroy()
-    @Override
-    public void onStart() {
-        super.onStart();
-        onTranslate(); // Вызываем на старте наш метод для перевода
     }
 }

@@ -4,4 +4,6 @@
     <string name="bookmark_fragment">Bookmark Fragment</string>
     <string name="settings_fragment">Settings Fragment</string>
     <string name="default_text">Hello cruel world</string>
+    <string name="switch_on">en-ru</string>
+    <string name="switch_off">ru-en</string>
 </resources>
