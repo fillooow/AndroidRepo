@@ -69,9 +69,9 @@ public class TranslateFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (testSwitch.isChecked())
-                    langTranslate = "en-ru";
-                else
                     langTranslate = "ru-en";
+                else
+                    langTranslate = "en-ru";
             }
         });
 
@@ -84,9 +84,9 @@ public class TranslateFragment extends Fragment {
         // Очень странный баг, всё факапается, если не прибить вручную, хоть я и сделал это
         // в слушателе
         if (testSwitch.isChecked())
-            langTranslate = "en-ru";
-        else
             langTranslate = "ru-en";
+        else
+            langTranslate = "en-ru";
         final Handler handler = new Handler(); // Реализуем всё в отдельном потоке
         handler.post(new Runnable() {
             @Override

@@ -17,6 +17,13 @@
         android:icon="@drawable/ic_action_bookmarks">
     </item>
     <item
+        android:id="@+id/action_history"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_history">
+    </item>
+    <item
         android:id="@+id/action_settings"
         android:title=""
         app:showAsAction="ifRoom"

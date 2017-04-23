@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_settings:
                         fragment = new SettingsFragment();
                         break;
+                    case R.id.action_history:
+                        fragment = new HistoryFragment();
                 }
                 final FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.main_container, fragment).commit();
