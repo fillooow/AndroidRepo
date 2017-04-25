@@ -34,6 +34,9 @@ public class YandexDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("ORIGINALTEXT", "test");
         contentValues.put("DESCRIPTIONTEXT", "тест");
         db.insert("YANDEXTRANSLATE", null, contentValues);
+        contentValues.put("ORIGINALTEXT", "poshe ti naher, kozyol");
+        contentValues.put("DESCRIPTIONTEXT", "go fuck yourself, you asshole");
+        db.insert("YANDEXTRANSLATE", null, contentValues);
     }
 
 

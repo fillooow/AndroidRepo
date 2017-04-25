@@ -29,6 +29,10 @@ public class HistoryFragment extends Fragment {
     private TranslateAdapter tA;
     // private Cursor cursor;
 
+    private final String dbName = "YANDEXTRANSLATE";
+    private final String dbOriginalRow = "ORIGINALTEXT";
+    private final String dbDescriptionRow = "DESCRIPTIONTEXT";
+
     private String[] originalText;
     private String[] descriptionText;
 
@@ -39,26 +43,25 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Cursor countCurcor = db.query("YANDEX")
+        originalText = new String[10];
+        int i = 0;
 
         try {
             SQLiteOpenHelper yandexDatabaseHelper = new YandexDatabaseHelper(getActivity());
             db = yandexDatabaseHelper.getReadableDatabase(); // Получаем ссылку на БД
 
-            Cursor cursor = db.query("YANDEXTRANSLATE", // Создаём курсор
-                    new String[] {"ORIGINALTEXT","DESCRIPTIONTEXT"},
-                    "_id = ?",
-                    new String[] {Integer.toString(1)} , null, null, null);
+            Cursor cursor = db.query(dbName, // Создаём курсор
+                    new String[] {dbOriginalRow,dbDescriptionRow},
+                    //"_id = ?",
+                    //new String[] {Integer.toString(1)} ,
+                    null, null, null, null, null);
             if (cursor.moveToFirst()) {
-                String origText = cursor.getString(0);
-                //TextView orTW = (TextView) getActivity().findViewById(R.id.or_text);
-                //orTW.setText(origText);
-                //TextView desTW = (TextView) getActivity().findViewById(R.id.des_text);
-                String desText = cursor.getString(1);
-                //desTW.setText(desText);
-//              Тут NPE, не шарю
-                originalText[0] = origText;
-                descriptionText[0] = desText;
-                tA = new TranslateAdapter(originalText, descriptionText);
+                do {
+                    String origText = cursor.getString(i);
+                    originalText[i] = origText;
+                    i++;
+                } while (cursor.moveToNext());
             }
             cursor.close();
             db.close();
@@ -71,5 +74,13 @@ public class HistoryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_history, container, false);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        TextView orTW = (TextView) getActivity().findViewById(R.id.or_text);
+        orTW.setText(originalText[0]);
+        TextView desTW = (TextView) getActivity().findViewById(R.id.des_text);
+        desTW.setText(originalText[1]);
+    }
 }
 

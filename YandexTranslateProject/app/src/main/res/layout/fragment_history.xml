@@ -5,15 +5,27 @@
     tools:context="com.fillooow.yandextranslateproject.HistoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<TextView
-    android:id="@+id/or_text"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="@string/hello_blank_fragment" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/des_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="сукаблять"
+            android:layout_marginTop="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/des_text"
+        android:id="@+id/or_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/des_text"
+        android:text="@string/hello_blank_fragment" />
+</FrameLayout>
