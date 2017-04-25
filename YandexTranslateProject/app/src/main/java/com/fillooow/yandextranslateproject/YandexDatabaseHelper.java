@@ -28,8 +28,9 @@ public class YandexDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE YANDEXTRANSLATE (" // Создаём таблицу с названием DRINK
                 + "_id INTEGER PRIMARY KEY AUTOINCREMENT, " // Создаём стобец _id
-                + "ORIGINALTEXT, " // Введённый текст
-                + "DESCRIPTIONTEXT);"); // Переведённый текст
+                + "ORIGINALTEXT TEXT, " // Введённый текст
+                + "DESCRIPTIONTEXT TEXT, " // Переведённый текст
+                + "COUNT INTEGER);"); // Счётчик записей
         ContentValues contentValues = new ContentValues();
         contentValues.put("ORIGINALTEXT", "test");
         contentValues.put("DESCRIPTIONTEXT", "тест");

@@ -3,8 +3,6 @@ package com.fillooow.yandextranslateproject;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 /**
  * Created by Fillow on 24.04.2017.
@@ -14,7 +12,7 @@ public class History {
     private String originalText;
     private String descriptionText;
     private SQLiteDatabase db;
-    private TranslateAdapter tA;
+    private YandexTranslateAdapter tA;
 
     public History() {
         try {
@@ -27,7 +25,7 @@ public class History {
             if (cursor.moveToFirst()) {
                 String origText = cursor.getString(0);
                 String desText = cursor.getString(1);
-                //tA = new TranslateAdapter(origText, desText);
+                //tA = new YandexTranslateAdapter(origText, desText);
             }
             cursor.close();
             db.close();
