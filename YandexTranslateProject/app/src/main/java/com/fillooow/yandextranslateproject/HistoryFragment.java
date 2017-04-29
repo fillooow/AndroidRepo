@@ -93,13 +93,11 @@ public class HistoryFragment extends Fragment {
         } catch (SQLiteException e) { // В случае ошибки, выводим тост
             Toast.makeText(getActivity(), "БД факапнулась в истории", Toast.LENGTH_SHORT).show();
         }
+        // Загружаем массивы в адаптер
         YandexTranslateAdapter adapter = new YandexTranslateAdapter(originalText, descriptionText);
-        historyRecycler.setAdapter(adapter);
+        historyRecycler.setAdapter(adapter); // Ставим адаптер
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        historyRecycler.setLayoutManager(layoutManager);
-        //RecyclerView translateRecycler = (RecyclerView) inflater.inflate(
-         //       R.layout.fragment_history, container, false);
-        //return inflater.inflate(R.layout.fragment_history, container, false);
+        historyRecycler.setLayoutManager(layoutManager); // Ставим разметку
         return historyRecycler;
     }
 

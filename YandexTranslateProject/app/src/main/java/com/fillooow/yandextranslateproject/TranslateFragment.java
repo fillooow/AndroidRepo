@@ -33,6 +33,7 @@ public class TranslateFragment extends Fragment {
     protected String wasText = ""; // Переведённый текст
     protected String langTranslate = ""; // Направление перевода
     protected String wasLangTranslate = ""; // Направление перевода
+    protected int timeCounter = 0;
 
     protected EditText editTextField; // Отсюда цепляем текст, который будем переводить
     protected TextView textViewField; // Сюда загоняем текст, который перевели
@@ -96,12 +97,19 @@ public class TranslateFragment extends Fragment {
                 // Если пустое поле, всё прибиваем ручками
                 if (textToTranslate.equals("")) {
                     wasText = textToTranslate;
+                    wasLangTranslate = langTranslate;
                     textViewField.setText("");
                     handler.postDelayed(this, 500);
                 }
 
-                if (!(wasText.equals(textToTranslate)))
+                // Если меняем язык или введённый текст, запускаем перевод
+                if (!(langTranslate.equals(wasLangTranslate)) | !(wasText.equals(textToTranslate))) {
                     new TranslateJsonTask().execute(textToTranslate, langTranslate);
+                    timeCounter = 0;
+                }
+                timeCounter++;
+                //if (timeCounter == 6)
+                    // update.execute()
                 wasText = textToTranslate;
                 wasLangTranslate = langTranslate;
                 handler.postDelayed(this, 500); // Рекурсируем метод, с помощью такой реализации
@@ -143,7 +151,7 @@ public class TranslateFragment extends Fragment {
                 in.close(); // Закрываем поток
                 text = translated.getResponse(); // Получаем ответ сервера из Json объекта
             } catch (IOException e) { // В случае ошибки, выводим тост
-                Toast.makeText(getActivity(), "Чёт факапнулось", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Запрос на перевод не обработался", Toast.LENGTH_SHORT).show();
             }
             return text;
         }
@@ -154,4 +162,20 @@ public class TranslateFragment extends Fragment {
             textViewField.setText(string); // Ставим переведённый текст
         }
     }
+
+
+    private class UpdateYandexDatabase extends AsyncTask <Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
+
 }
+

@@ -47,11 +47,6 @@ public class TranslateClass {
         this.text[0] = text;
     }
 
-
-    /*public String showMessageInfo(){
-        // System.out.println(getTranslateText() + ". Мы это перевели с направления " + getLang() + " и получили код " + getCode());
-    } */
-
     // Вывод нужной информации
     public String getResponse() {
         //response = getTranslateText() + ". Мы это перевели с направления " + getLang() + " и получили код " + getCode();
@@ -59,26 +54,3 @@ public class TranslateClass {
         return response;
     }
 }
-
-
-
-/*
-
-throws IOException {
-        Translate translate = new Translate();
-        translate.setLang("en-ru");
-        translate.setTranslateText("Denis loves memes");
-        Gson gson = new Gson(); // Создаём объект Json
-
-        // Пилим подключение к Яндексу и его переводчику, мы собираем ссылку вручную, не забывая про перекодировани
-        URLConnection connection = new URL(translate.getYandexURL() + "?key=" + translate.getKey() + "&text=" + URLEncoder.encode(translate.getText(), "UTF-8") + "&lang=" + translate.getLang()).openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream())); // Открываем поток вывода с сайта в переменную in
-        TranslateClass translated = gson.fromJson(in.readLine(), TranslateClass.class); // Создаём новый объект с распаршенным Json-ом на основе in.reaLine() - те, выведенного
-        // в in потока
-        in.close(); // Закрываем поток
-
-        translated.showMessageInfo(); // Выводим информацию
-    }
-
-
- */

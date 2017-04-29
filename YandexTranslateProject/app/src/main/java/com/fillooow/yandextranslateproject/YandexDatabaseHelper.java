@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by Fillow on 12.04.2017.
+ * Работа с БД происходит тут
  */
 
 public class YandexDatabaseHelper extends SQLiteOpenHelper {
