@@ -1,9 +1,15 @@
 package com.fillooow.yandextranslateproject;
 
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -30,7 +37,8 @@ import java.net.URLEncoder;
  */
 public class TranslateFragment extends Fragment {
     protected String textToTranslate; // Текст для перевода, выцепляем из editTextField
-    protected String wasText = ""; // Переведённый текст
+    protected String wasText = ""; // Текст,отправленный на перевод, дабы запросы не дублировались
+    protected String translatedText = ""; //Переведённый текст
     protected String langTranslate = ""; // Направление перевода
     protected String wasLangTranslate = ""; // Направление перевода
     protected int timeCounter = 0;
@@ -39,6 +47,8 @@ public class TranslateFragment extends Fragment {
     protected TextView textViewField; // Сюда загоняем текст, который перевели
     protected Switch testSwitch; // Тестовая кнопка переключения языка
     protected View view;
+
+    TranslateJsonTask tjt;
 
     public TranslateFragment() {
         // Required empty public constructor
@@ -104,12 +114,24 @@ public class TranslateFragment extends Fragment {
 
                 // Если меняем язык или введённый текст, запускаем перевод
                 if (!(langTranslate.equals(wasLangTranslate)) | !(wasText.equals(textToTranslate))) {
-                    new TranslateJsonTask().execute(textToTranslate, langTranslate);
+                    tjt = new TranslateJsonTask();
+                    tjt.execute(textToTranslate, langTranslate);
+                    // Получаем переведённый текст
+                    try {
+                        translatedText = tjt.get();
+                    } catch (InterruptedException e) {
+                        Toast.makeText(getActivity(), "InterruptedException",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (ExecutionException e) {
+                        Toast.makeText(getActivity(), "ExecutionException",
+                                Toast.LENGTH_SHORT).show();
+                    }
                     timeCounter = 0;
                 }
                 timeCounter++;
-                //if (timeCounter == 6)
-                    // update.execute()
+                if (timeCounter == 6) {
+                    new UpdateYandexDatabase().execute(textToTranslate, translatedText);
+                }
                 wasText = textToTranslate;
                 wasLangTranslate = langTranslate;
                 handler.postDelayed(this, 500); // Рекурсируем метод, с помощью такой реализации
@@ -151,7 +173,8 @@ public class TranslateFragment extends Fragment {
                 in.close(); // Закрываем поток
                 text = translated.getResponse(); // Получаем ответ сервера из Json объекта
             } catch (IOException e) { // В случае ошибки, выводим тост
-                Toast.makeText(getActivity(), "Запрос на перевод не обработался", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Запрос на перевод не обработался",
+                        Toast.LENGTH_SHORT).show();
             }
             return text;
         }
@@ -164,9 +187,30 @@ public class TranslateFragment extends Fragment {
     }
 
 
-    private class UpdateYandexDatabase extends AsyncTask <Integer, Void, Void> {
+    private class UpdateYandexDatabase extends AsyncTask <String, Void, Void> {
+        private String original = "";
+        private String translated = "";
+
         @Override
-        protected Void doInBackground(Integer... params) {
+        protected Void doInBackground(String... params) {
+            original = params[0];
+            translated = params[1];
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ORIGINALTEXT", original);
+            contentValues.put("DESCRIPTIONTEXT", translated);
+            SQLiteOpenHelper yandexHelper =
+                    new YandexDatabaseHelper(getActivity());
+            try {
+                SQLiteDatabase db = yandexHelper.getWritableDatabase();
+                db.insert("YANDEXTRANSLATE", null, contentValues);
+                db.close();
+            } catch (SQLiteException e) {
+                Toast.makeText(getActivity(), "Запрос на запись в историю не обработался",
+                        Toast.LENGTH_SHORT).show();
+            } catch (NullPointerException e) {
+//                Toast.makeText(getActivity(), "NP",
+                      //  Toast.LENGTH_SHORT).show();
+            }
             return null;
         }
 
@@ -175,7 +219,23 @@ public class TranslateFragment extends Fragment {
             super.onPostExecute(aVoid);
         }
     }
+/*
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("textToTranslate", textToTranslate);
+        super.onSaveInstanceState(outState);
+    }
 
-
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState == null) {
+            textToTranslate = "";
+       } else {
+            textToTranslate = savedInstanceState.getString("textToTranslate", "meme");
+        }
+        //timeCounter = savedInstanceState.getInt("timer", 0);
+    }
+    */
 }
 
