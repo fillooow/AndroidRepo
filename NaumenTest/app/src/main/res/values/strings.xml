@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NaumenTest</string>
+    <string name="previous">PREVIOUS</string>
+    <string name="next">NEXT</string>
+    <string name="activityButtonText">ACTIVITY</string>
+    <string name="pageCounter">page 0 of 0</string>
+</resources>
