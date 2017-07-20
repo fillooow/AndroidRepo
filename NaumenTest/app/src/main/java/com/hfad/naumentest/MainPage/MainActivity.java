@@ -5,6 +5,9 @@ package com.hfad.naumentest.MainPage;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +15,11 @@ import android.widget.TextView;
 
 import com.hfad.naumentest.API.APIUtils;
 import com.hfad.naumentest.API.NService;
+import com.hfad.naumentest.ComputerCard.CardModel;
 import com.hfad.naumentest.ComputerCard.ComputerCard;
 import com.hfad.naumentest.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private Button previousButton;
 
     private int computerId;
-    private int page = 2; // Страница
+    private int intentComputerId;
+    private int page = 0; // Страница
     private int pages = 0; // Для рассчёта onNextButton в lastPage(), тупо больше page на 1
     private double maxPages = 1; // Дробное максимальное количество страниц, мы его вычисляем
     private int offset = 0; // Количество пропущенных элементов
@@ -40,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private int total = 572; // Всего элементов
     private boolean nextEnabled = true;
     private boolean previousEnabled = true;
+    private RecyclerView myRecyclerView;
+    private MainAdapter mainAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,24 @@ public class MainActivity extends AppCompatActivity {
         previousButton = (Button) findViewById(R.id.previousButton);
         pagesCounter = (TextView) findViewById(R.id.pageCounterID);
         mService = APIUtils.getMService(); // Строим retrofit объект, собираем ссылку
+        myRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
+        mainAdapter = new MainAdapter(this, new ArrayList<Item>(0), new MainAdapter.MainItemListener() {
+
+            @Override
+            public void onMainClick(long id) {
+                // Toast.makeText(ComputerCard.this, "Computer id is" + id, Toast.LENGTH_SHORT).show();
+                computerId = (int) id;
+                Intent intent = new Intent(MainActivity.this, ComputerCard.class);
+                intent.putExtra("computerId", computerId);
+                startActivity(intent);
+            }
+        });
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        myRecyclerView.setLayoutManager(layoutManager);
+        myRecyclerView.setAdapter(mainAdapter);
+        myRecyclerView.setHasFixedSize(true);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        myRecyclerView.addItemDecoration(itemDecoration);
         loadSomeCrap();
     }
 
@@ -59,25 +85,24 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Model> call, Response<Model> response) {
 
                 if(response.isSuccessful()) {
-                    responseItems = response.body().getItems();
+                    /*responseItems = response.body().getItems();
 
                     computerName = (TextView) findViewById(R.id.computerName);
                     computerName.setText(responseItems.get(1).getName());
 
                     companyName = (TextView) findViewById(R.id.companyName);
                     if (responseItems.get(1).getCompany() != null) // Поле может не существовать
-                        companyName.setText(responseItems.get(1).getCompany().getName());
+                        companyName.setText(responseItems.get(1).getCompany().getName());*/
 
-                    computerId = responseItems.get(1).getId();
-                    page = response.body().getPage();
-                    offset = response.body().getOffset();
-                    total = response.body().getTotal();
-                    pagesCounter.setText("page " + page + " of " + (int) lastPage());
-                }else {
-                    computerName = (TextView) findViewById(R.id.computerName);
-                    computerName.setText("test");
+                    //computerId = responseItems.get(1).getId();
+                    page = response.body().getPage(); //  Получаем страницу
+                    offset = response.body().getOffset(); // Получаем количество просмотренных пк
+                    total = response.body().getTotal(); // Получаем количество всех пека
+                    pagesCounter.setText("page " + page + " of " + (int) lastPage()); // page X of Y
+                    mainAdapter.updateAnswers(response.body().getItems()); // Пихаем List<Items> в адаптер
+                    Log.d("testcrap", "posts loaded from API");
+                }else
                     Log.d("testcrap", "posts not loaded from API");
-                }
             }
 
             @Override

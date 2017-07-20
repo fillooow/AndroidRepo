@@ -4,4 +4,6 @@
     <string name="next">NEXT</string>
     <string name="activityButtonText">ACTIVITY</string>
     <string name="pageCounter">page 0 of 0</string>
+    <string name="similar">You must be looking for:</string>
+    <string name="image_description">computer image</string>
 </resources>

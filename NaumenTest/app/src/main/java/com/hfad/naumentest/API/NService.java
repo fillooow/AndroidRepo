@@ -26,5 +26,5 @@ public interface NService {
     Call<CardModel> getComputer(@Path("id") int id);
 
     @GET("rest/computers/{id}/similar")
-    Call<List<SimilarModel>> getSimilar(@Path("id") int id);
+    Call<List<CardModel>> getSimilar(@Path("id") int id);
 }
