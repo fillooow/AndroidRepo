@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Penyok Android</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="set_name">Set your name</string>
+    <string name="icon_description">user icon</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="logInButton">Войти</string>
+    <string name="title_activity_login">Sign in</string>
+
+
+    <string-array name="navigation_drawer_items_array">
+        <item>Stats</item>
+        <item>Loans</item>
+        <item>Friends</item>
+    </string-array>
+</resources>
