@@ -6,15 +6,21 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Fillow on 11.11.2017.
  */
 
 public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
-    String[] test = new String[3];
+    private ArrayList<String> chars;
+    private ArrayList<Integer> counters;
 
-    public AdapterRTF(String[] test){
-        this.test = test;
+    public AdapterRTF(ArrayList<String> chars, ArrayList<Integer> counters){
+        this.chars = chars;
+        this.counters = counters;
     }
 
     @Override
@@ -26,13 +32,15 @@ public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TextView tv = (TextView) holder.cardView.findViewById(R.id.testText);
-        tv.setText(test[position]);
+        TextView charsTV = (TextView) holder.cardView.findViewById(R.id.chars);
+        charsTV.setText(chars.get(position));
+        TextView counterTV = (TextView) holder.cardView.findViewById(R.id.counter);
+        counterTV.setText(counters.get(position).toString());
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return chars.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     Button symbols;
@@ -25,17 +28,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSymbolsButtonClick(View v) {
-        getEditText();
+        getEditText("symbols");
     }
 
     public void onAlphabetButtonClick(View v) {
-        getEditText();
+        getEditText("alphabet");
     }
 
-    public void getEditText() {
+    public void getEditText(String key) {
         editText = (EditText) findViewById(R.id.editText);
         editString = editText.getText().toString();
-        startActivity(new Intent(MainActivity.this, ShowActivity.class).putExtra("edit text", editString));
+        startActivity(new Intent(MainActivity.this, ShowActivity.class)
+                .putExtra("editString", editString).putExtra("key", key));
     }
+
+    /*private void alphabetStuff(String string) {
+        //for(int i = 0; i<string.length(); i++)
+            //true;
+
+    }*/
+
+    /*private void symbolsStuff(String string) {
+        for (int i = 0; i<string.length(); i++) {
+            if(!chars.contains(string.charAt(i))) {
+                chars.add(string.charAt(i));
+                counters.add(1);
+            }
+            else {
+                int value = counters.get(i);
+                counters.add(i, value+1);
+            }
+        }
+    }*/
 
 }
