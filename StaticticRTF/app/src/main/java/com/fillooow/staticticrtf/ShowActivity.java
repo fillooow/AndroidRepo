@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,12 +19,19 @@ public class ShowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-        
         key = getIntent().getStringExtra("key");
-        if (getIntent().getStringExtra("key").equals("alphabet"))
-            symbolsStuff(getIntent().getStringExtra("editString"));
-        else if (getIntent().getStringExtra("key").equals("alphabet"))
+        chars = new ArrayList<>();
+        counters = new ArrayList<>();
+        if (getIntent().getStringExtra("key").equals("alphabet")) {
             alphabetStuff(getIntent().getStringExtra("editString"));
+            //Toast.makeText(getApplicationContext(), "alphabet", Toast.LENGTH_SHORT).show();
+            Log.d("tag", "alphabet");
+        }
+        else if (getIntent().getStringExtra("key").equals("symbols")) {
+            symbolsStuff(getIntent().getStringExtra("editString"));
+            //Toast.makeText(getApplicationContext(), "symbols", Toast.LENGTH_SHORT).show();
+            Log.d("tag", "symbols");
+        }
         AdapterRTF adapter = new AdapterRTF(chars, counters);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
         rv.setAdapter(adapter);
@@ -33,14 +42,18 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void symbolsStuff(String string) {
+        int counter = 0;
         for (int i = 0; i < string.length(); i++) {
             Character ch = string.charAt(i);
             if (!chars.contains(ch.toString())) {
                 chars.add(ch.toString());
                 counters.add(1);
+                counter++;
             } else {
-                counters.add(chars.indexOf(ch.toString()), counters.get(i) + 1);
+                counters.set(chars.indexOf(ch.toString()), counters.get(chars.indexOf(ch.toString())) + 1);
+                counter++;
             }
+            Log.d("tag", "counter " + counter);
         }
     }
 }
