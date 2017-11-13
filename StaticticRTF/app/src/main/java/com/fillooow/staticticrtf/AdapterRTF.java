@@ -11,8 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *
  * Created by Fillow on 11.11.2017.
  */
+
+//TODO: 1) отключать пробелы, 2) отключить регистр, 3)посчитать лишь буквы
 
 public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
     private ArrayList<String> chars;

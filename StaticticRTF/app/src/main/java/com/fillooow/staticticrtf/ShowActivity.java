@@ -10,8 +10,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ShowActivity extends AppCompatActivity {
-    String key;
-    String editString;
     ArrayList<String> chars;
     ArrayList<Integer> counters;
 
@@ -19,18 +17,13 @@ public class ShowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-        key = getIntent().getStringExtra("key");
         chars = new ArrayList<>();
         counters = new ArrayList<>();
         if (getIntent().getStringExtra("key").equals("alphabet")) {
             alphabetStuff(getIntent().getStringExtra("editString"));
-            //Toast.makeText(getApplicationContext(), "alphabet", Toast.LENGTH_SHORT).show();
-            Log.d("tag", "alphabet");
         }
         else if (getIntent().getStringExtra("key").equals("symbols")) {
             symbolsStuff(getIntent().getStringExtra("editString"));
-            //Toast.makeText(getApplicationContext(), "symbols", Toast.LENGTH_SHORT).show();
-            Log.d("tag", "symbols");
         }
         AdapterRTF adapter = new AdapterRTF(chars, counters);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
