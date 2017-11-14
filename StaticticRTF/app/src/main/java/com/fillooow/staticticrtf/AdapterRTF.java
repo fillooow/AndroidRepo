@@ -11,11 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * Created by Fillow on 11.11.2017.
  */
-
-//TODO: 1) отключать пробелы, 2) отключить регистр, 3)посчитать лишь буквы
 
 public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
     private ArrayList<String> chars;
@@ -36,7 +33,10 @@ public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TextView charsTV = (TextView) holder.cardView.findViewById(R.id.chars);
-        charsTV.setText(chars.get(position));
+        if(!chars.get(position).equals(" "))
+            charsTV.setText(chars.get(position));
+        else
+            charsTV.setText("Пробел");
         TextView counterTV = (TextView) holder.cardView.findViewById(R.id.counter);
         counterTV.setText(counters.get(position).toString());
     }
