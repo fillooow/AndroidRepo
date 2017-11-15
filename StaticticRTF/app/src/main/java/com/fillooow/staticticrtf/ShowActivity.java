@@ -4,17 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class ShowActivity extends AppCompatActivity {
-    String editString;
-    ArrayList<String> chars;
-    ArrayList<Integer> counters;
-    boolean registerOff;
-    boolean spacesOff;
-    boolean marksOff;
+    private String editString;
+    private ArrayList<String> chars;
+    private ArrayList<Integer> counters;
+    private Double entropy;
+
+    TextView entropyTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,41 +22,48 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
 
         editString = getIntent().getStringExtra("editString");
-        registerOff = getIntent().getBooleanExtra("registerOff", false);
-        spacesOff = getIntent().getBooleanExtra("spacesOff", false);
-        marksOff = getIntent().getBooleanExtra("marksOff", false);
+        boolean registerOff = getIntent().getBooleanExtra("registerOff", false);
+        boolean spacesOff = getIntent().getBooleanExtra("spacesOff", false);
+        boolean marksOff = getIntent().getBooleanExtra("marksOff", false);
 
         if (registerOff)
             editString = editString.toUpperCase();
         if (spacesOff)
             editString = editString.replaceAll("\\s+","");
         if (marksOff)
-            editString = editString.replaceAll("[^a-zA-Zа-яА-Я]", "");
+            editString = editString.replaceAll("[^a-zA-Zа-яёА-ЯЁ]", "");
 
         chars = new ArrayList<>();
         counters = new ArrayList<>();
 
-        entropy(editString);
+        dismemberOfText(editString);
+        //entropy = entropy(counters);
+        entropy = entropy;
 
         AdapterRTF adapter = new AdapterRTF(chars, counters);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        entropyTV = (TextView) findViewById(R.id.entropyTV);
+        entropyTV.setText(entropy.toString());
     }
 
-    private void entropy(String string) {
-        int counter = 0;
+    private void dismemberOfText(String string) {
         for (int i = 0; i < string.length(); i++) {
             Character ch = string.charAt(i);
             if (!chars.contains(ch.toString())) {
                 chars.add(ch.toString());
                 counters.add(1);
-                counter++;
-            } else {
+            } else
                 counters.set(chars.indexOf(ch.toString()), counters.get(chars.indexOf(ch.toString())) + 1);
-                counter++;
-            }
-            Log.d("tag", "counter " + counter);
         }
+    }
+
+    private double entropy(ArrayList<Integer> count) {
+        double entropy = 0;
+        for (int i: count) {
+            entropy = entropy + ((i/count.size())*(Math.log(i/count.size())/Math.log(2)));
+        }
+        return entropy*(-1);
     }
 }
