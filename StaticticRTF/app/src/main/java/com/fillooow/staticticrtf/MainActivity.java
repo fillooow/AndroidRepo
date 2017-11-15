@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox registerOff;
     CheckBox spacesOff;
     CheckBox marksOff;
+    CheckBox doubleChars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         registerOff = (CheckBox) findViewById(R.id.checkBoxRegisterOff);
         spacesOff = (CheckBox) findViewById(R.id.checkBoxSpacesOff);
         marksOff = (CheckBox) findViewById(R.id.checkBoxMarksOff);
+        doubleChars = (CheckBox) findViewById(R.id.doubleChars);
     }
 
     public void onSymbolsButtonClick(View v) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     .putExtra("editString", editText.getText().toString())
                     .putExtra("registerOff", registerOff.isChecked())
                     .putExtra("spacesOff", spacesOff.isChecked())
-                    .putExtra("marksOff", marksOff.isChecked()));
+                    .putExtra("marksOff", marksOff.isChecked())
+                    .putExtra("doubleChars", doubleChars.isChecked()));
     }
 }

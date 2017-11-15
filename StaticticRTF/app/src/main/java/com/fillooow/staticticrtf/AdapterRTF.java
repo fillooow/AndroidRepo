@@ -17,10 +17,12 @@ import java.util.Map;
 public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
     private ArrayList<String> chars;
     private ArrayList<Integer> counters;
+    private int length;
 
-    public AdapterRTF(ArrayList<String> chars, ArrayList<Integer> counters){
+    public AdapterRTF(ArrayList<String> chars, ArrayList<Integer> counters, int length){
         this.chars = chars;
         this.counters = counters;
+        this.length = length;
     }
 
     @Override
@@ -33,12 +35,14 @@ public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TextView charsTV = (TextView) holder.cardView.findViewById(R.id.chars);
-        if(!chars.get(position).equals(" "))
-            charsTV.setText(chars.get(position));
-        else
-            charsTV.setText("Пробел");
-        TextView counterTV = (TextView) holder.cardView.findViewById(R.id.counter);
-        counterTV.setText(counters.get(position).toString());
+        if(!chars.get(position).equals(" ")) {
+            charsTV.setText("'" + chars.get(position) + "' встречается "
+                    + counters.get(position).toString() + " раз, вероятность появления: "
+                    + (double) counters.get(position)/length + "%");
+        } else
+            charsTV.setText("Пробел встречается "
+                    + counters.get(position).toString() + " раз, вероятность появления: "
+                    + (double) counters.get(position)/length + "%");
     }
 
     @Override
