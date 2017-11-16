@@ -38,11 +38,11 @@ public class AdapterRTF extends RecyclerView.Adapter<AdapterRTF.ViewHolder> {
         if(!chars.get(position).equals(" ")) {
             charsTV.setText("'" + chars.get(position) + "' встречается "
                     + counters.get(position).toString() + " раз, вероятность появления: "
-                    + (double) counters.get(position)/length + "%");
+                    + (double) counters.get(position)/length);
         } else
             charsTV.setText("Пробел встречается "
                     + counters.get(position).toString() + " раз, вероятность появления: "
-                    + (double) counters.get(position)/length + "%");
+                    + (double) counters.get(position)/length);
     }
 
     @Override
