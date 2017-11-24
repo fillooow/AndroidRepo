@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class ShowActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class ShowActivity extends AppCompatActivity {
             editString = editString.replaceAll("[^a-zA-Zа-яёА-ЯЁ]", "");
             doubleDismemberOfText(editString);
         }
+        sortText(chars, counters);
 
         entropy = entropy(counters, editString.length());
 
@@ -52,6 +55,17 @@ public class ShowActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         entropyTV = (TextView) findViewById(R.id.entropyTV);
         entropyTV.setText(String.format(Locale.getDefault(), "%(.3f", entropy));
+    }
+
+    private void sortText(ArrayList<String> chars, ArrayList<Integer> counters) {
+        ArrayList<String> tempChars = new ArrayList<>();
+        ArrayList<Integer> tempCounters = new ArrayList<>();
+        while (Collections.max(counters) != -1) {
+            int index = counters.indexOf(Collections.max(counters));
+            tempChars.add(chars.get(index));
+            tempCounters.add(counters.get(index));
+            counters.set(index, -1);
+        }
     }
 
     private void doubleDismemberOfText(String string) {
