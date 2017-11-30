@@ -4,11 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class ShowActivity extends AppCompatActivity {
@@ -60,13 +63,39 @@ public class ShowActivity extends AppCompatActivity {
     private void sortText(ArrayList<String> chars, ArrayList<Integer> counters) {
         ArrayList<String> tempChars = new ArrayList<>();
         ArrayList<Integer> tempCounters = new ArrayList<>();
-        while (Collections.max(counters) != -1) {
-            int index = counters.indexOf(Collections.max(counters));
-            tempChars.add(chars.get(index));
-            tempCounters.add(counters.get(index));
-            counters.set(index, -1);
-        }
+        int low = 0;
+        int high = counters.size();
+        Log.d("qwe", "high = " + high + ", size = " + counters.size());
+        quicksort(counters, low, high-1);
     }
+
+    private void quicksort(ArrayList<Integer> counters, int low, int high) {
+        int i = low;
+        int j = high;
+        Log.d("qwe", "j = " + j);
+        int avg = counters.get(low+(high-low)/2);
+        do {
+            while(counters.get(i) > avg)
+                i++;
+            while (counters.get(j) < avg)
+                j--;
+            if(i <= j) {
+                int temp = counters.get(j);
+                String tempS = chars.get(j);
+                counters.set(j, counters.get(i));
+                chars.set(j, chars.get(i));
+                counters.set(i, temp);
+                chars.set(i, tempS);
+                i++;
+                j--;
+            }
+        } while(i <= j);
+        if (low < j)
+            quicksort(counters, low, j);
+        if (i < high)
+            quicksort(counters, i, high);
+    }
+
 
     private void doubleDismemberOfText(String string) {
         for (int i = 0; i < string.length()-1; i++) {
@@ -98,5 +127,11 @@ public class ShowActivity extends AppCompatActivity {
             entropy = entropy + ((double)i/length)*(Math.log((double)i/length)/Math.log(2));
         }
         return entropy*(-1);
+    }
+
+    private void huffman(){
+        ArrayList<String> alphabet = new ArrayList<>();
+        ArrayList<String> tree = new ArrayList<>();
+
     }
 }
