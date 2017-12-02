@@ -1,5 +1,6 @@
 package com.journaldev.navigationdrawer;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -16,6 +17,7 @@ class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> {
 
     StatsAdapter(List<MyStatsModel> msItems) {
         this.myStatsItems = msItems;
+        Log.d("testtest", "stats constructor");
     }
 
     // inner class to hold a reference to each item of RecyclerView
@@ -29,6 +31,8 @@ class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> {
             // метаданные, необходимые для правильной работы адаптера
             // (позиция варианта в RecyclerView, например)
             cardView = v;
+
+            Log.d("testtest", "stats viewholder");
         }
     }
 
@@ -60,11 +64,14 @@ class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> {
             } else
                 valueText.setText(item.getValue().toString());
         }
+
+        Log.d("testtest", "stats end adapter");
     }
 
     void updateStats(List<MyStatsModel> items) {
         myStatsItems = items;
         notifyDataSetChanged();
+        Log.d("testtest", "stats notified");
     }
 
     // Return the size of your itemsData (invoked by the layout manager)

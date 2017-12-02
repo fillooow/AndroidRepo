@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.journaldev.navigationdrawer.API.APIUtils;
 import com.journaldev.navigationdrawer.API.Model;
-import com.journaldev.navigationdrawer.API.MyStatsModel;
+import com.journaldev.navigationdrawer.API.MyFriendModel;
 import com.journaldev.navigationdrawer.API.PenyokService;
 
 import java.util.ArrayList;
@@ -22,84 +24,89 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by anupamchugh on 10/12/15.
- */
 public class FriendsFragment extends Fragment {
 
-    private String sid;
-    private PenyokService friendsService;
     private RecyclerView friendsRecyclerView;
-    private FriendsAdapter friendsAdapter;
-    private List<Integer> ids;
-    private List<String> names;
+    private TextView emptyTextFriends;
 
-    public FriendsFragment() {
-    }
+    private PenyokService friendsService;
+    private FriendsAdapter friendsAdapter;
+    private List<MyFriendModel> myFriendModels;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        friendsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_stats, container, false);
-
-        // view = getView();
-        sid = ((MainActivity) getActivity()).getSid();
+        LinearLayout linearLayoutFriends = (LinearLayout) inflater.inflate(R.layout.fragment_recycle, container, false);
+        friendsRecyclerView = (RecyclerView) linearLayoutFriends.findViewById(R.id.rv_fragments);
+        emptyTextFriends = (TextView) linearLayoutFriends.findViewById(R.id.emptyText);
         friendsService = APIUtils.getPService();
 
-        friendsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_stats, container, false);
-        friendsAdapter = new FriendsAdapter(new ArrayList<Integer>(0), new ArrayList<String>(0), getActivity().getApplicationContext(), sid);
+        friendsAdapter = new FriendsAdapter(new ArrayList<MyFriendModel>(0),
+                new FriendsAdapter.FriendDeleteItemListener() {
+                    @Override
+                    public void onDeleteClick(int id) {
+                        friendsService.getRemoveFriend(id, MainActivity.getSid()).enqueue(new Callback<Model>() {
+
+                            @Override
+                            public void onResponse(Call<Model> call, Response<Model> response) {
+                                if(response.isSuccessful()) {
+                                    if(response.body().getRemoveFriend().equals(true))
+                                        Toast.makeText(getActivity(), "true", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(getActivity(), "false", Toast.LENGTH_SHORT).show();
+
+                                    friendsAdapter.updateFriends(myFriendModels);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Model> call, Throwable t) {
+                                //showErrorMessage();
+                                Log.d("testtest", t.toString());
+                                Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
         friendsRecyclerView.setAdapter(friendsAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         friendsRecyclerView.setLayoutManager(layoutManager);
         loadFriends();
 
-        return friendsRecyclerView;
+        return linearLayoutFriends;
     }
 
     private void loadFriends(){
-        friendsService.getFriends(sid).enqueue(new Callback<Model>() {
+        friendsService.getFriends(MainActivity.getSid()).enqueue(new Callback<Model>() {
 
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {
                 if(response.isSuccessful()) {
-                    ids = response.body().getMyFriends();
-                    loadUserName(ids);
-                    friendsAdapter.updateFriends(response.body().getMyFriends(), names);
-                    // Toast.makeText(getActivity(), "Gav gav", Toast.LENGTH_SHORT).show();
+                    if(response.body().getMyFriends() == null){
+                        friendsRecyclerView.setVisibility(View.VISIBLE);
+                        emptyTextFriends.setVisibility(View.GONE);
+                        emptyTextFriends.setText("Похоже, у вас ещё нет друзей");
+                    } else {
+                        friendsRecyclerView.setVisibility(View.VISIBLE);
+                        emptyTextFriends.setVisibility(View.GONE);
+                        myFriendModels = response.body().getMyFriends();
+                        friendsAdapter.updateFriends(response.body().getMyFriends());
+                    }
+
                 }
             }
 
             @Override
             public void onFailure(Call<Model> call, Throwable t) {
-                //showErrorMessage();
-                Log.d("cardtestcrap", t.toString());
-                Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+                emptyTextFriends.setVisibility(View.VISIBLE);
+                friendsRecyclerView.setVisibility(View.GONE);
+                emptyTextFriends.setText("Проверьте ваше подключение к сети");
             }
         });
     }
 
-    private void loadUserName(List<Integer> id) {
-        for (int x : id) {
-            friendsService.getUserName(x, sid).enqueue(new Callback<Model>() {
+    //public void onDeleteFriendClick(View view) {
 
-                @Override
-                public void onResponse(Call<Model> call, Response<Model> response) {
-                    if (response.isSuccessful()) {
-                        if (response.body().getNameFor() != null)
-                            names.add(response.body().getNameFor());
-                    else
-                        names.add("Set your name");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Model> call, Throwable t) {
-                    //showErrorMessage();
-                    Log.d("cardtestcrap", t.toString());
-                    // Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
+    //}
 
 }

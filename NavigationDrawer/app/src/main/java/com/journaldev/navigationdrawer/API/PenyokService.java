@@ -15,14 +15,21 @@ public interface PenyokService {
     @GET("json/login")
     Call<Model> getLogIn(@Query("id") String id, @Query("pass") String pass, @Query("device") String device);
 
-    @GET("json/my_stats")
+    @GET("json/user_stats")
     Call<Model> getStats(@Query("sid") String sid);
 
     @GET("json/my_friends")
     Call<Model> getFriends(@Query("sid") String sid);
 
+    @GET("json/remove_friend")
+    Call<Model> getRemoveFriend(@Query("id") int id, @Query("sid") String sid);
+
     @GET("json/name_for")
     Call<Model> getUserName(@Query("id") int id, @Query("sid") String sid);
+
+    @GET("json/transactions_list")
+    Call<Model> getTransactionsHistory(@Query("sid") String sid);
+
 
     /* @GET("rest/computers?p=2")
     Call<Model> getItems();

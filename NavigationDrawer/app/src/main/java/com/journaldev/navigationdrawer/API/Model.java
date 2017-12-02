@@ -12,15 +12,23 @@ public class Model {
 
     @SerializedName("my_friends")
     @Expose
-    private List<Integer> myFriends = null;
+    private List<MyFriendModel> myFriends = null;
 
-    @SerializedName("my_stats")
+    @SerializedName("user_stats")
     @Expose
     private List<MyStatsModel> myStats = null;
 
     @SerializedName("name_for")
     @Expose
     private String nameFor;
+
+    @SerializedName("transactions_list")
+    @Expose
+    private List<TransactionsListModel> transactionsList = null;
+
+    @SerializedName("remove_friend")
+    @Expose
+    private Boolean removeFriend;
 
 
 
@@ -32,11 +40,11 @@ public class Model {
         this.login = login;
     }
 
-    public List<Integer> getMyFriends() {
+    public List<MyFriendModel> getMyFriends() {
         return myFriends;
     }
 
-    public void setMyFriends(List<Integer> myFriends) {
+    public void setMyFriends(List<MyFriendModel> myFriends) {
         this.myFriends = myFriends;
     }
 
@@ -56,4 +64,20 @@ public class Model {
         this.nameFor = nameFor;
     }
 
+
+    public List<TransactionsListModel> getTransactionsList() {
+        return transactionsList;
+    }
+
+    public void setTransactionsList(List<TransactionsListModel> transactionsList) {
+        this.transactionsList = transactionsList;
+    }
+
+    public Boolean getRemoveFriend() {
+        return removeFriend;
+    }
+
+    public void setRemoveFriend(Boolean removeFriend) {
+        this.removeFriend = removeFriend;
+    }
 }

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
 
-    private String sid;
+    private static String sid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         DataModel[] drawerItem = new DataModel[3];
 
         drawerItem[0] = new DataModel(R.drawable.connect, "Stats");
-        drawerItem[1] = new DataModel(R.drawable.fixtures, "Loans");
+        drawerItem[1] = new DataModel(R.drawable.fixtures, "Transactions");
         drawerItem[2] = new DataModel(R.drawable.table, "Friends");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new StatsFragment();
                 break;
             case 1:
-                fragment = new LoansFragment();
+                fragment = new TransactionsFragment();
                 break;
             case 2:
                 fragment = new FriendsFragment();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    protected String getSid(){
+    protected static String getSid(){
         return  sid;
     }
 }

@@ -5,36 +5,36 @@ import com.google.gson.annotations.SerializedName;
 
 public class TransactionsListModel {
 
-    @SerializedName("Id")
+    @SerializedName("Id") // Id транзакции
     @Expose
     private Integer id;
-    @SerializedName("author")
+    @SerializedName("author") // Создатель транзакции
     @Expose
-    private Integer author;
+    private Integer author; // Автор
     @SerializedName("payer")
     @Expose
-    private Integer payer;
+    private Integer payer; // Отдаёт, ему надо будет вернуть
     @SerializedName("payee")
     @Expose
-    private Integer payee;
+    private Integer payee; // Получает, он должен будет вернуть
     @SerializedName("count")
     @Expose
-    private Integer count;
+    private Integer count; // Сколько
     @SerializedName("time")
     @Expose
-    private String time;
+    private String time; // Когда принята
     @SerializedName("hidden")
     @Expose
-    private Boolean hidden;
+    private Boolean hidden; // Отображается ли в публичной истории
     @SerializedName("accepted")
     @Expose
-    private Boolean accepted;
+    private Boolean accepted; // Принята
     @SerializedName("message")
     @Expose
-    private String message;
+    private String message; // Сообщение к транзакции
     @SerializedName("date")
     @Expose
-    private Object date;
+    private String date; // До этой даты
 
     public Integer getId() {
         return id;
@@ -108,11 +108,11 @@ public class TransactionsListModel {
         this.message = message;
     }
 
-    public Object getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Object date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

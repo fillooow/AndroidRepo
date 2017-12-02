@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.journaldev.navigationdrawer.API.APIUtils;
 import com.journaldev.navigationdrawer.API.Model;
@@ -20,61 +22,62 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by anupamchugh on 10/12/15.
- */
 public class StatsFragment extends Fragment {
 
-    private String sid;
-    private PenyokService statsService;
+    private TextView emptyTextStats;
     private RecyclerView statsRecyclerView;
-    //TODO: удалить
-    // private View view;
-    private StatsAdapter statsAdapter;
 
-    public StatsFragment() {
-    }
+    private PenyokService statsService;
+    private StatsAdapter statsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        statsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_stats, container, false);
+        LinearLayout linearLayoutStats = (LinearLayout) inflater.inflate(R.layout.fragment_recycle, container, false);
+        //transactionsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycle, container, false);
+        statsRecyclerView = (RecyclerView) linearLayoutStats.findViewById(R.id.rv_fragments);
+        emptyTextStats = (TextView) linearLayoutStats.findViewById(R.id.emptyText);
 
-        // view = getView();
-        sid = ((MainActivity) getActivity()).getSid();
         statsService = APIUtils.getPService();
-        statsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_stats, container, false);
+//        statsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycle, container, false);
         statsAdapter = new StatsAdapter(new ArrayList<MyStatsModel>(0));
         statsRecyclerView.setAdapter(statsAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         statsRecyclerView.setLayoutManager(layoutManager);
         loadStats();
 
-        return statsRecyclerView;
+        return linearLayoutStats;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // пишем тут
     }
 
     private void loadStats(){
-        statsService.getStats(sid).enqueue(new Callback<Model>() {
+        statsService.getStats(MainActivity.getSid()).enqueue(new Callback<Model>() {
 
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {
                 if(response.isSuccessful()) {
-                        statsAdapter.updateStats(response.body().getMyStats());
-                        // Toast.makeText(getActivity(), "Gav gav", Toast.LENGTH_SHORT).show();
+                        if(response.body().getMyStats() == null) {
+                            emptyTextStats.setVisibility(View.VISIBLE);
+                            statsRecyclerView.setVisibility(View.GONE);
+                        }
+                        else {
+                            Log.d("tag", "stats response null" + MainActivity.getSid());
+                            emptyTextStats.setVisibility(View.GONE);
+                            statsRecyclerView.setVisibility(View.VISIBLE);
+                            statsAdapter.updateStats(response.body().getMyStats());
+                        }
                     }
                 }
 
             @Override
             public void onFailure(Call<Model> call, Throwable t) {
-                //showErrorMessage();
-                Log.d("cardtestcrap", t.toString());
-                // Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+                emptyTextStats.setVisibility(View.VISIBLE);
+                statsRecyclerView.setVisibility(View.GONE);
+                emptyTextStats.setText("Проверьте ваше подключение к сети");
             }
         });
     }

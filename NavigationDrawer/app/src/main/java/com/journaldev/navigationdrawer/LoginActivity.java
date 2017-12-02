@@ -52,18 +52,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "запрос удался", Toast.LENGTH_SHORT).show();
-                    textView = (TextView) findViewById(R.id.textView);
-                    textView.setText(response.body().toString());
 
                     if (response.body().getLogin() != null){
                         sid = response.body().getLogin();
+                        //sid = "511ecde6c1c9d56fd63ec330b73fcfb09076d00a36b7c94517265f6616ca28259191a0b2cb9bb178138dd3628ff8e81ccdfdb4dcf4924c8368250b08cf596d7d";
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("sid", sid);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 }else {
-                    Toast.makeText(LoginActivity.this, "запрос сломался", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "запрос сломался" , Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -81,11 +80,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogInClick(View view) {
-        /* loginEditText = (EditText) findViewById(R.id.login);
-        passwordEditText = (EditText) findViewById(R.id.password);
-
-        login = loginEditText.getText().toString();
-        password = passwordEditText.getText().toString(); */
         login = "nyrko_ueban";
         password = "1488";
         logIn(login, password, DEVICE);
