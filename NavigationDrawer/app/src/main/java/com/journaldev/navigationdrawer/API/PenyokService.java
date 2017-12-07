@@ -30,6 +30,9 @@ public interface PenyokService {
     @GET("json/transactions_list")
     Call<Model> getTransactionsHistory(@Query("sid") String sid);
 
+    @GET("json/fill_state")
+    Call<Model> getStatus();
+
 
     /* @GET("rest/computers?p=2")
     Call<Model> getItems();

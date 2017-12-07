@@ -32,14 +32,6 @@ class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewH
         this.transactions = transactions;
         Log.d("testtest", "constructor");
     }
-    /*TransactionsAdapter(List<TransactionsListModel> transactions, List<String> authorNames,
-                        List<String> payeeNames, List<String> payerNames) {
-        this.transactions = transactions;
-        this.authorNames = authorNames;
-        this.payeeNames = payeeNames;
-        this.payerNames = payerNames;
-        Log.d("testtest", "constructor");
-    }*/
 
     // inner class to hold a reference to each item of RecyclerView
     // Предоставляет ссылку на представления, используемые в RecyclerView
@@ -74,32 +66,22 @@ class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewH
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d("testtest", "onBind");
         CardView cardView = holder.cardView; // Получаем карточку
-        TransactionsListModel historyItems = transactions.get(position); // Дефолт респонс с сервера
-        // В нём у нас id и инфа по транзакциям
-        /*String authorItem = authorNames.get(position); // Достаём имя автора транзакции
-        String payeeItem = payeeNames.get(position); // Достаём имя того, кто берёт деньги
-        String payerItem = payerNames.get(position); // Достаём имя того, кто отдаёт деньги */
+        TransactionsListModel historyItems = transactions.get(position);
 
         TextView author = (TextView) cardView.findViewById(R.id.author_history);
-        //if (authorItem == null)
-            author.setText("id " + historyItems.getAuthor().toString());
-       // else
-            //author.setText("Author: " + authorItem);
+        author.setText((historyItems.getWith().getCreator() ? "Не вы" : "Вы") + " автор транзакции");
 
         TextView payee = (TextView) cardView.findViewById(R.id.payee_history);
-        //if (payeeItem == null)
-            payee.setText("id " + historyItems.getPayee().toString());
-        //else
-            //payee.setText("Payee: " + payeeItem);
+        payee.setText("Второй участник транзакции " + historyItems.getWith().getName());
 
         TextView payer = (TextView) cardView.findViewById(R.id.payer_history);
-        //if (payerItem == null)
-            payer.setText("id " + historyItems.getPayer().toString());
-        //else
-            //payer.setText("Payer: " + payerItem);
+        payer.setText("Ну тут тип платёжник");
 
         TextView count = (TextView) cardView.findViewById(R.id.count_history);
-        count.setText(historyItems.getCount().toString() + " рублей");
+        count.setText(historyItems.getCount().toString() + " хрен знает чего");
+
+        TextView percent = (TextView) cardView.findViewById(R.id.percent_history);
+        percent.setText("Под процент: " + historyItems.getCent() + "%");
 
         TextView time = (TextView) cardView.findViewById(R.id.time_history);
         String timeMillisecondsStr = historyItems.getTime().replaceAll("[^0-9]", "");
@@ -108,9 +90,9 @@ class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewH
         long timeMilliseconds = Long.parseLong(timeMillisecondsStr);
         Calendar timeCalendar = Calendar.getInstance();
         timeCalendar.setTimeInMillis(timeMilliseconds);
-        time.setText("Created: " +
+        time.setText("Создано: " +
                 new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(timeCalendar.getTime()) +
-                " at " + new SimpleDateFormat("HH:mm:ss", Locale.US).format(timeCalendar.getTime()));
+                " в " + new SimpleDateFormat("HH:mm:ss", Locale.US).format(timeCalendar.getTime()));
 
         TextView date = (TextView) cardView.findViewById(R.id.time_limit_history);
         if (historyItems.getDate() != null) {
@@ -120,9 +102,9 @@ class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewH
             long dateMilliseconds = Long.parseLong(dateMillisecondsStr);
             Calendar dateCalendar = Calendar.getInstance();
             dateCalendar.setTimeInMillis(dateMilliseconds);
-            date.setText("For: " +
+            date.setText("До: " +
                     new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(dateCalendar.getTime()) +
-                    " at " +
+                    " в " +
                     new SimpleDateFormat("HH:mm:ss", Locale.US).format(dateCalendar.getTime()));
         }
         else
@@ -134,38 +116,8 @@ class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewH
                 message.setVisibility(View.GONE);
             else
                 message.setText("Сообщение для Вас: " + historyItems.getMessage());
-
-        // TODO: заменить всё
-        // userName.setText(friendsItems.getValue());
-        /*
-        // Заполняем поля
-        Context context = holder.user_icon.getContext();
-        //imageLoad(item, con);
-        // TODO: методы переобозначить, тут 2 строки кала подряд
-        String url = "https://penok.lisenkosoft.ru/json/user_icon/" + historyItems.getPayee();
-        Log.d("testtest", historyItems.getPayee().toString());
-        // holder.user_icon = (ImageView) cardView.findViewById(R.id.user_icon);
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = 50 * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        int px = (int) dp;
-        Picasso.with(context)
-                .load(url)
-                .error(R.drawable.non_pic)
-                .resize(px, px)
-                .into(holder.user_icon); */
         Log.d("testtest", "onBind end");
     }
-
-    /*void updateTransactions(List<TransactionsListModel> transactions, List<String> authorNames,
-                            List<String> payeeNames, List<String> payerNames) {
-        this.transactions = transactions;
-        this.authorNames = authorNames;
-        this.payeeNames = payeeNames;
-        this.payerNames = payerNames;
-        notifyDataSetChanged();
-        Log.d("testtest", "notified");
-    }*/
 
     void updateTransactions(List<TransactionsListModel> transactions) {
         this.transactions = transactions;

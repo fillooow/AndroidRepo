@@ -72,7 +72,6 @@ class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
         CardView cardView = holder.cardView; // Получаем карточку
         MyFriendModel friendsItems = friends.get(position);
         userName = (TextView) cardView.findViewById(R.id.user_name);
-        // TODO: ну вот тут чёт не работает
         userName.setText(friendsItems.getValue());
 
         // Заполняем поля

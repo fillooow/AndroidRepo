@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.body().getLogin() != null){
                         sid = response.body().getLogin();
                         //sid = "511ecde6c1c9d56fd63ec330b73fcfb09076d00a36b7c94517265f6616ca28259191a0b2cb9bb178138dd3628ff8e81ccdfdb4dcf4924c8368250b08cf596d7d";
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivityDrawer.class);
                         intent.putExtra("sid", sid);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);

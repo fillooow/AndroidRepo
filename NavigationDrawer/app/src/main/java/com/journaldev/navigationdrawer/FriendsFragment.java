@@ -24,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.journaldev.navigationdrawer.MainActivityDrawer.sid;
+
 public class FriendsFragment extends Fragment {
 
     private RecyclerView friendsRecyclerView;
@@ -77,7 +79,7 @@ public class FriendsFragment extends Fragment {
     }
 
     private void loadFriends(){
-        friendsService.getFriends(MainActivity.getSid()).enqueue(new Callback<Model>() {
+        friendsService.getFriends(sid).enqueue(new Callback<Model>() {
 
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {

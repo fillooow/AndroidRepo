@@ -24,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.journaldev.navigationdrawer.MainActivityDrawer.sid;
+
 public class TransactionsFragment extends Fragment {
 
 
@@ -48,10 +50,6 @@ public class TransactionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        //TODO: заменить лейаут
-        //transactionsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycle, container, false);
-
         transactionsService = APIUtils.getPService();
         transactions = new ArrayList<>();
         authorNames = new ArrayList<>();
@@ -60,12 +58,10 @@ public class TransactionsFragment extends Fragment {
 
         //TODO: заменить лейаут
         LinearLayout linearLayoutTransactions = (LinearLayout) inflater.inflate(R.layout.fragment_recycle, container, false);
-        //transactionsRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycle, container, false);
         transactionsRecyclerView = (RecyclerView) linearLayoutTransactions.findViewById(R.id.rv_fragments);
         emptyTextTransactions = (TextView) linearLayoutTransactions.findViewById(R.id.emptyText);
 
-        transactionsAdapter = new TransactionsAdapter(new ArrayList<TransactionsListModel>(0)/*,
-                new ArrayList<String>(0), new ArrayList<String>(0), new ArrayList<String>(0)*/);
+        transactionsAdapter = new TransactionsAdapter(new ArrayList<TransactionsListModel>(0));
         transactionsRecyclerView.setAdapter(transactionsAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         transactionsRecyclerView.setLayoutManager(layoutManager);
@@ -76,7 +72,7 @@ public class TransactionsFragment extends Fragment {
     }
 
     private void loadTransactions() {
-        transactionsService.getTransactionsHistory(MainActivity.getSid()).enqueue(new Callback<Model>() {
+        transactionsService.getTransactionsHistory(sid).enqueue(new Callback<Model>() {
 
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {
@@ -91,7 +87,8 @@ public class TransactionsFragment extends Fragment {
                     else {
                         emptyTextTransactions.setVisibility(View.GONE);
                         transactionsRecyclerView.setVisibility(View.VISIBLE);
-                        Toast.makeText(getActivity(), "not null", Toast.LENGTH_SHORT).show();
+                        //TODO: разобраться с nullpointer
+                        //Toast.makeText(getActivity(), "not null", Toast.LENGTH_SHORT).show();
                         Log.d("testtest", "response  " + response.body().getTransactionsList().toString());
                         transactions.addAll(response.body().getTransactionsList());
                         /*size = transactions.size();

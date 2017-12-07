@@ -30,6 +30,9 @@ public class Model {
     @Expose
     private Boolean removeFriend;
 
+    @SerializedName("fill_state")
+    @Expose
+    private String fillState;
 
 
     public String getLogin() {
@@ -79,5 +82,13 @@ public class Model {
 
     public void setRemoveFriend(Boolean removeFriend) {
         this.removeFriend = removeFriend;
+    }
+
+    public String getFillState() {
+        return fillState;
+    }
+
+    public void setFillState(String fillState) {
+        this.fillState = fillState;
     }
 }

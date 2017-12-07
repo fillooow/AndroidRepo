@@ -10,6 +10,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="password">Password</string>
     <string name="logInButton">Войти</string>
     <string name="title_activity_login">Sign in</string>
@@ -19,5 +20,11 @@
         <item>Stats</item>
         <item>Loans</item>
         <item>Friends</item>
+        <item>Settings</item>
+        <item>Logout</item>
     </string-array>
+    <string name="title_activity_main_drawer">MainActivityDrawer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

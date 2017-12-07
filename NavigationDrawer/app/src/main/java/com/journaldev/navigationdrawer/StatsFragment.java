@@ -22,6 +22,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.journaldev.navigationdrawer.MainActivityDrawer.sid;
+
 public class StatsFragment extends Fragment {
 
     private TextView emptyTextStats;
@@ -55,7 +57,7 @@ public class StatsFragment extends Fragment {
     }
 
     private void loadStats(){
-        statsService.getStats(MainActivity.getSid()).enqueue(new Callback<Model>() {
+        statsService.getStats(sid).enqueue(new Callback<Model>() {
 
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {
