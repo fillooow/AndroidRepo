@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">DenisRestaurant</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="text_change_phone">Изменение номера</string>
+    <string name="didnt_get_code">Не пришёл проверочный код?</string>
+    <string name="send_new_code">Отправить код заново</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+        sed diam nonummy nibh euismod tincidunt ut laoreet dolore
+        magna aliquam erat volutpat. </string>
+
+    <string name="back_text">Back</string>
+
+
+    <string name="telephone_hint">Телефон</string>
+    <string name="password_hint">Пароль</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_number_success">Изменение номера телефона успешно заверешно</string>
+    <string name="back_to_profile">вернуться в профиль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="log_in">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+
+    <string name="password_changing">Изменение пароля</string>
+    <string name="repeat_password_hint">Новый пароль (повторно)</string>
+    <string name="password_missmatch">Пароли не совпадают</string>
+    <string name="new_password">Новый пароль</string>
+
+    <string name="send_text">Отправить</string>
+    <string name="change_text">Изменить</string>
+    <string name="verification_code">Проверочный код</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="name_text">Имя</string>
+    <string name="mail_text">fil201121@yandex.ru</string>
+    <string name="surname_text">Фамилия</string>
+    <string name="name_and_surname_text">Имя Фамилия</string>
+    <string name="shadrin_philipp">Шадрин Филипп</string>
+    <string name="philipp">Филипп</string>
+    <string name="shadrin">Шадрин</string>
+    <string name="e_mail">Электронная почта</string>
+    <string name="sex_text">Пол</string>
+    <string name="empty_text">(Пусто)</string>
+    <string name="birthday_text">Дата рождения</string>
+    <string name="next_text">Next</string>
+    <string name="newsletter_text">Новостная рассылка</string>
+    <string name="promocodes_text">Ввести промокод</string>
+    <string name="history_text">История заказов</string>
+    <string name="privacy_police">Политика конфиденциальности</string>
+    <string name="log_out">Выйти</string>
+    <string name="other_text">Прочее</string>
+    <string name="recomendations">Рекомендации</string>
+    <string name="send">отправить</string>
+    <string name="telephone_number">Номер телефона</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="on_map_text">На карте</string>
+</resources>
